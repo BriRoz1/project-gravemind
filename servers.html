@@ -35,35 +35,52 @@
 
 <section class="page-hero"><div class="wrap">
   <div class="band"><h2><span lang="en">Servers</span><span lang="es">Servidores</span></h2></div>
-  <p class="lead"><span lang="en">Open the game, go to <b>FIND GAMES</b> and they're on the list. Players vote the next map and mode in the lobby.</span><span lang="es">Abre el juego, entra en <b>BUSCAR PARTIDAS</b> y ahí están. Los jugadores votan el próximo mapa y modo en la sala.</span></p>
+  <p class="lead"><span lang="en">They're in <b>FIND GAMES</b>. Players vote the next map in the lobby.</span><span lang="es">Están en <b>BUSCAR PARTIDAS</b>. Los jugadores votan el siguiente mapa en la sala.</span></p>
 </div></section>
 <section class="reveal"><div class="wrap">
   <div class="table-wrap"><table class="servers">
     <thead><tr><th><span lang="en">Server</span><span lang="es">Servidor</span></th><th><span lang="en">Map · mode</span><span lang="es">Mapa · modo</span></th><th><span lang="en">Players</span><span lang="es">Jugadores</span></th></tr></thead>
     <tbody>
-      <tr><td>BR &amp; Sniper<span class="sub"><span lang="en">Dedicated · playlist</span><span lang="es">Dedicado · lista</span></span></td><td><span lang="en">Free for all, battle rifle + sniper rifle. Lockout, Midship, Ivory Tower, Foundation.</span><span lang="es">Todos contra todos, rifle de batalla y francotirador. Encerrona, Centro de nave, Torre de marfil, Cimientos.</span></td><td>16</td></tr>
-      <tr><td>MLG 4v4<span class="sub"><span lang="en">Dedicated · playlist</span><span lang="es">Dedicado · lista</span></span></td><td><span lang="en">Team Slayer to 50, battle rifle, no radar.</span><span lang="es">Asesino por equipos a 50, rifle de batalla, sin radar.</span></td><td>8</td></tr>
-      <tr><td>Big Maps: Coagulation<span class="sub"><span lang="en">Dedicated · playlist</span><span lang="es">Dedicado · lista</span></span></td><td><span lang="en">Capture the Flag, Oddball and Territories on the big maps.</span><span lang="es">Capturar la bandera, bola loca y territorios en los mapas grandes.</span></td><td>16</td></tr>
-      <tr><td>Big Maps: Zanzibar<span class="sub"><span lang="en">Dedicated · playlist</span><span lang="es">Dedicado · lista</span></span></td><td><span lang="en">The same rotation, Zanzibar most.</span><span lang="es">La misma rotación, Zanzíbar más a menudo.</span></td><td>16</td></tr>
-      <tr><td>Mod: Halo 2 Uncut<span class="sub"><span lang="en">Dedicated · mod</span><span lang="es">Dedicado · mod</span></span></td><td><span lang="en">Slayer on the Halo 2: Uncut mod; it downloads from the Steam Workshop when you join.</span><span lang="es">Asesino en el mod Halo 2: Uncut; se descarga de Steam Workshop al entrar.</span></td><td>16</td></tr>
-      <tr><td>GRAVEMIND LIVE<span class="sub"><span lang="en">Matchmaking</span><span lang="es">Matchmaking</span></span></td><td><span lang="en">24 matchmaking servers for the ranked playlists.</span><span lang="es">24 servidores de matchmaking para las listas con rango.</span></td><td>2-16</td></tr>
+      <tr><td>BR &amp; Sniper<span class="sub"><span lang="en">Dedicated</span><span lang="es">Dedicado</span></span></td><td><span lang="en">Free for all, battle rifle and sniper. Lockout, Midship, Ivory Tower, Foundation.</span><span lang="es">Todos contra todos, rifle de batalla y francotirador. Encerrona, Centro de nave, Torre de marfil, Cimientos.</span></td><td>16</td></tr>
+      <tr><td>MLG 4v4<span class="sub"><span lang="en">Dedicated</span><span lang="es">Dedicado</span></span></td><td><span lang="en">Team Slayer to 50, battle rifle, no radar.</span><span lang="es">Asesino por equipos a 50, rifle de batalla, sin radar.</span></td><td>8</td></tr>
+      <tr><td>Big Maps: Coagulation<span class="sub"><span lang="en">Dedicated</span><span lang="es">Dedicado</span></span></td><td><span lang="en">CTF, Oddball and Territories on the big maps.</span><span lang="es">CTF, bola loca y territorios en los mapas grandes.</span></td><td>16</td></tr>
+      <tr><td>Big Maps: Zanzibar<span class="sub"><span lang="en">Dedicated</span><span lang="es">Dedicado</span></span></td><td><span lang="en">Same rotation, more Zanzibar.</span><span lang="es">La misma rotación, más Zanzíbar.</span></td><td>16</td></tr>
+      <tr><td>Mod: Halo 2 Uncut<span class="sub"><span lang="en">Dedicated · mod</span><span lang="es">Dedicado · mod</span></span></td><td><span lang="en">Slayer on Halo 2: Uncut. The mod downloads when you join.</span><span lang="es">Asesino en Halo 2: Uncut. El mod se descarga al entrar.</span></td><td>16</td></tr>
     </tbody>
   </table></div>
-  <div class="band"><h2><span lang="en">Hosting</span><span lang="es">Alojar partidas</span></h2></div>
-  <div class="grid two">
-    <div class="panel"><h3><span lang="en">A custom game</span><span lang="es">Una partida personalizada</span></h3>
-      <p><span lang="en">Only the host forwards <b>UDP port 11774</b> on the router; players who join open nothing. Can't forward ports? Play over Radmin VPN, ZeroTier or Tailscale.</span><span lang="es">Solo el host abre el <b>puerto UDP 11774</b> en su router; los que se unen no abren nada. ¿No puedes abrir puertos? Jugad con Radmin VPN, ZeroTier o Tailscale.</span></p></div>
-    <div class="panel"><h3><span lang="en">A dedicated server</span><span lang="es">Un servidor dedicado</span></h3>
-      <p><span lang="en">On a Windows PC with MCC the server runs the matches itself (nobody freezes when someone leaves); without MCC the first player's PC runs them. One UDP port per server.</span><span lang="es">En un PC con Windows y MCC el servidor corre las partidas él mismo (nadie se congela cuando alguien sale); sin MCC las corre el PC del primer jugador. Un puerto UDP por servidor.</span></p></div>
-  </div>
-<pre><code>h2gravemind.exe --servers          # creates dedicated.toml the first time
+
+  <div class="band"><h2><span lang="en">Run your own server</span><span lang="es">Monta tu servidor</span></h2></div>
+  <p><span lang="en">Windows 10 or 11. With MCC installed on that PC the server hosts the matches itself; without it, it still works and the first player hosts.</span><span lang="es">Windows 10 u 11. Si ese PC tiene MCC, el servidor aloja las partidas él mismo; si no, también funciona y las aloja el primer jugador.</span></p>
+  <ol class="steps">
+    <li><span lang="en">Unzip Project Gravemind into a folder, for example <code>C:\H2Server</code>.</span><span lang="es">Descomprime Project Gravemind en una carpeta, por ejemplo <code>C:\H2Server</code>.</span></li>
+    <li><span lang="en">Open a terminal in that folder and run it once. It creates <code>dedicated.toml</code> and <code>playlists\ejemplo.json</code> and closes by itself:</span><span lang="es">Abre una terminal en esa carpeta y ejecútalo una vez. Crea <code>dedicated.toml</code> y <code>playlists\ejemplo.json</code> y se cierra solo:</span>
+<pre><code>h2gravemind.exe --servers</code></pre></li>
+    <li><span lang="en">Edit <code>dedicated.toml</code>: one <code>[[server]]</code> per server, each with its own port.</span><span lang="es">Edita <code>dedicated.toml</code>: un <code>[[server]]</code> por servidor, cada uno con su puerto.</span>
+<pre><code>master = "master01.gravemind.haloarchive.com:11770, master02.gravemind.haloarchive.com:11770"
+admins = ["your player_id"]        # Documents\My Games\Project Gravemind\h2gravemind.ini
+
+[defaults]
+max_players = 16
+min_players = 2
+password = ""                      # empty = open
+engine = "server"                  # "player" if this PC has no MCC: the first player hosts
 
 [[server]]
-name = "BR &amp; Sniper"
+name = "My Slayer"
 port = 11780
-playlist = "br_sniper"              # players vote between 3 games
-engine = "server"                   # this PC runs the matches (needs MCC)</code></pre>
-  <p><span lang="en">Master servers (UDP 11770) can be run by anyone: </span><span lang="es">Cualquiera puede montar un servidor maestro (UDP 11770): </span><a href="https://github.com/BriRoz1/h2gravemind-master">h2gravemind-master</a> (Linux / Docker).</p>
+map = "lockout"
+game = "slayer"
+
+[[server]]
+name = "My Playlist"
+port = 11781
+playlist = "ejemplo"               # playlists\ejemplo.json: players vote between 3 games</code></pre></li>
+    <li><span lang="en">On your router, forward each server's port as <b>UDP</b> to this PC (11780, 11781...). Let Windows Firewall allow it the first time.</span><span lang="es">En tu router, abre el puerto de cada servidor como <b>UDP</b> hacia este PC (11780, 11781...). Deja que el Firewall de Windows lo permita la primera vez.</span></li>
+    <li><span lang="en">Run it again. Each server gets its own window, restarts by itself if it stops and logs to <code>data\&lt;name&gt;\server.log</code>. In a minute they show in everyone's FIND GAMES.</span><span lang="es">Ejecútalo otra vez. Cada servidor tiene su ventana, se reinicia solo si se cae y guarda su log en <code>data\&lt;nombre&gt;\server.log</code>. En un minuto salen en BUSCAR PARTIDAS de todos.</span>
+<pre><code>h2gravemind.exe --servers</code></pre></li>
+    <li><span lang="en">As an admin you get a box in the server's lobby for commands: <code>kick #2</code>, <code>ban &quot;Name&quot; 1d</code>, <code>map lockout</code>.</span><span lang="es">Como admin tienes un cuadro en la sala del servidor para comandos: <code>kick #2</code>, <code>ban &quot;Nombre&quot; 1d</code>, <code>map lockout</code>.</span></li>
+  </ol>
+  <p><span lang="en">Hosting a custom game instead? Only the host opens <b>UDP 11774</b>; or play over Radmin VPN, ZeroTier or Tailscale.</span><span lang="es">¿Solo una partida personalizada? Solo el host abre el <b>UDP 11774</b>; o jugad por Radmin VPN, ZeroTier o Tailscale.</span></p>
 </div></section>
 
 </main>
