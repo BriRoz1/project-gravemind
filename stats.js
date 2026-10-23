@@ -4,6 +4,7 @@
 
 (function () {
   const URLS = ["https://raw.githubusercontent.com/BriRoz1/project-gravemind-stats/main/stats.json", "data/stats.json"];
+  if (/^(127\.0\.0\.1|localhost)$/.test(location.hostname)) URLS.reverse();  // a local preview shows its own data/stats.json first
   const REFRESH = 120000;  // ms between loads
   const STALE = 15 * 60;   // s without a new file: the server is not reporting
   const PAGE = 50;         // players shown at a time
@@ -33,13 +34,120 @@
     94: ["Captured Territory", "Territorio capturado"], 97: ["Last Strike", "Último golpe"], 98: ["First Strike", "Primer golpe"],
   };
 
+  // the launcher's 18 armour / emblem colours (settings.cpp kArmorColors), by index
+  const COLORS = ["#d8d8d8", "#7c7f86", "#c02828", "#e0701e", "#d8b030", "#6e7a2e", "#2e8b3a", "#8aa27a", "#38b8d8", "#1e8a8a",
+    "#3355aa", "#2050e0", "#6a40c0", "#8a2a9a", "#e070b0", "#8a1020", "#6a4628", "#c0a070"];
+  const color = (i) => COLORS[Math.min(Math.max(i | 0, 0), 17)];
+
   const $ = (id) => document.getElementById(id);
   const t = (en, es) => '<span lang="en">' + en + '</span><span lang="es">' + es + "</span>";
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const n = (v) => (v || 0).toLocaleString();
   const pct = (a, b) => (b ? Math.round((a * 100) / b) + " %" : "–");
   const kd = (k, d) => (k || d ? (k / Math.max(1, d)).toFixed(2) : "–");
-  const lvl = (v) => '<span class="lvl">' + (v || 1) + "</span>";
+  // Halo 2's rank icon (tools/web_assets.py: MCC's SMALLRANKICON / LARGERANKICON)
+  const rankSrc = (v, big) => "img/ranks/" + (big ? "large/" : "small/") + String(Math.min(Math.max(v | 0, 1), 50)).padStart(2, "0") + ".png";
+  const lvl = (v, big) => '<img class="rank' + (big ? " big" : "") + '" src="' + rankSrc(v, big) + '" alt="' + (v || 1) + '" title="' +
+    (v || 1) + '" width="' + (big ? 152 : 26) + '" height="' + (big ? 152 : 26) + '">';
+
+  // --- MCC's emblems, composed as the launcher does (mapart.cpp EmblemCompose): the background shape in colour 3,
+  // the foreground's second layer in colour 2 and its first layer in colour 1, each 52 x 52 shape resampled to the
+  // size wanted with sharpened edges. The shapes come from three sprite sheets (tools/web_assets.py).
+  const emblems = { ready: false, index: null, sheets: {}, cache: {} };
+  function loadEmblems() {
+    const load = (src) => new Promise((ok) => { const im = new Image(); im.onload = () => ok(im); im.onerror = () => ok(null); im.src = src; });
+    return fetch("img/emblems/index.json").then((r) => r.json()).then((index) =>
+      Promise.all([load("img/emblems/fg1.png"), load("img/emblems/fg2.png"), load("img/emblems/bg.png")]).then((imgs) => {
+        emblems.index = index;
+        emblems.sheets = { fg: imgs[0], fg2: imgs[1], bg: imgs[2] };
+        emblems.ready = !!(imgs[0] && imgs[2]);
+      })).catch(() => { emblems.ready = false; });
+  }
+  // a shape's alpha (0..1 per pixel, cell x cell) out of a sheet
+  function shape(kind, number) {
+    const idx = emblems.index, img = emblems.sheets[kind];
+    const i = idx && img ? idx[kind].indexOf(number) : -1;
+    if (i < 0) return null;
+    const c = idx.cell, cv = document.createElement("canvas");
+    cv.width = cv.height = c;
+    const ctx = cv.getContext("2d");
+    ctx.drawImage(img, (i % idx.cols) * c, Math.floor(i / idx.cols) * c, c, c, 0, 0, c, c);
+    const d = ctx.getImageData(0, 0, c, c).data, out = new Float32Array(c * c);
+    for (let k = 0; k < out.length; k++) out[k] = d[k * 4] / 255;
+    return out;
+  }
+  // m x m mask -> n x n: bicubic, then the edge sharpened (a threshold band that narrows as the scale grows)
+  function resample(mask, m, n) {
+    if (m === n) return mask;
+    const at = (x, y) => mask[Math.min(Math.max(y, 0), m - 1) * m + Math.min(Math.max(x, 0), m - 1)];
+    const cubic = (t, a, b, c, d) => b + 0.5 * t * (c - a + t * (2 * a - 5 * b + 4 * c - d + t * (3 * (b - c) + d - a)));
+    const out = new Float32Array(n * n), scale = m / n, edge = Math.min(Math.max(0.5 * m / n, 0.04), 0.5), row = [0, 0, 0, 0];
+    for (let y = 0; y < n; y++) {
+      const v = (y + 0.5) * scale - 0.5, y0 = Math.floor(v), ty = v - y0;
+      for (let x = 0; x < n; x++) {
+        const u = (x + 0.5) * scale - 0.5, x0 = Math.floor(u), tx = u - x0;
+        for (let k = 0; k < 4; k++) row[k] = cubic(tx, at(x0 - 1, y0 - 1 + k), at(x0, y0 - 1 + k), at(x0 + 1, y0 - 1 + k), at(x0 + 2, y0 - 1 + k));
+        const a = Math.min(Math.max((cubic(ty, row[0], row[1], row[2], row[3]) - (0.5 - edge)) / (2 * edge), 0), 1);
+        out[y * n + x] = a * a * (3 - 2 * a);
+      }
+    }
+    return out;
+  }
+  // the emblem of a look ([fg, bg, c1, c2, c3, species, primary, secondary]) as a data URL, n x n
+  function emblem(look, n) {
+    if (!emblems.ready || !look) return "";
+    const key = look.slice(0, 5).join(",") + "@" + n;
+    if (emblems.cache[key]) return emblems.cache[key];
+    const m = emblems.index.cell, layers = [["bg", look[1], look[4]], ["fg2", look[0], look[3]], ["fg", look[0], look[2]]];
+    const rgb = new Float32Array(n * n * 3), alpha = new Float32Array(n * n);
+    let any = false;
+    layers.forEach(([kind, number, ci]) => {
+      const s = shape(kind, number);
+      if (!s) return;
+      any = true;
+      const a = resample(s, m, n), hex = color(ci), c = [parseInt(hex.slice(1, 3), 16), parseInt(hex.slice(3, 5), 16), parseInt(hex.slice(5, 7), 16)];
+      for (let i = 0; i < a.length; i++) {
+        for (let k = 0; k < 3; k++) rgb[i * 3 + k] = rgb[i * 3 + k] * (1 - a[i]) + c[k] * a[i];
+        alpha[i] = alpha[i] + a[i] * (1 - alpha[i]);
+      }
+    });
+    if (!any) return "";
+    const cv = document.createElement("canvas");
+    cv.width = cv.height = n;
+    const ctx = cv.getContext("2d"), img = ctx.createImageData(n, n), d = img.data;
+    for (let i = 0; i < alpha.length; i++) {
+      const inv = alpha[i] > 0.001 ? 1 / alpha[i] : 0;  // blended over black: back to straight alpha
+      for (let k = 0; k < 3; k++) d[i * 4 + k] = Math.min(255, Math.round(rgb[i * 3 + k] * inv));
+      d[i * 4 + 3] = Math.round(alpha[i] * 255);
+    }
+    ctx.putImageData(img, 0, 0);
+    return (emblems.cache[key] = cv.toDataURL());
+  }
+  const emb = (p, n) => { const src = emblem(p.look, n || 24); return src ? '<img class="emb" src="' + src + '" width="' + (n || 24) + '" height="' + (n || 24) + '" alt="">' : ""; };
+
+  // MCC's line-art Spartan / Elite (white on transparent) in the player's armour colours: the primary over most of
+  // the body, the secondary towards the feet
+  function figure(look, el) {
+    const species = look && look[5] === 1 ? "elite" : "spartan";
+    const img = new Image();
+    img.onload = () => {
+      const cv = document.createElement("canvas");
+      cv.width = img.width;
+      cv.height = img.height;
+      const ctx = cv.getContext("2d");
+      ctx.drawImage(img, 0, 0);
+      ctx.globalCompositeOperation = "source-in";
+      const g = ctx.createLinearGradient(0, 0, 0, img.height);
+      g.addColorStop(0, color(look ? look[6] : 2));
+      g.addColorStop(0.55, color(look ? look[6] : 2));
+      g.addColorStop(1, color(look ? look[7] : 0));
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, img.width, img.height);
+      el.innerHTML = "";
+      el.appendChild(cv);
+    };
+    img.src = "img/body/" + species + ".png";
+  }
   const title = (s) => s.replace(/\b\w/g, (c) => c.toUpperCase());
   const now = () => Math.floor(Date.now() / 1000);
 
@@ -61,7 +169,7 @@
     return m < 60 ? m + " min" : Math.floor(m / 60) + " h " + (m % 60) + " min";
   }
 
-  let data = null, playlists = {}, players = [], shown = PAGE, sortKey = "level", sortDown = true, filter = "", topTab = "";
+  let data = null, playlists = {}, players = [], byName = {}, shown = PAGE, sortKey = "level", sortDown = true, filter = "", topTab = "";
 
   // every account with its totals over the playlists (ranks only where played)
   function prepare(d) {
@@ -72,6 +180,8 @@
       Object.values(p.ranks || {}).forEach((r) => { Object.keys(tot).forEach((k) => { tot[k] += r[k] || 0; }); });
       return Object.assign({ tot: tot, online: !!p.status }, p);
     });
+    byName = {};
+    players.forEach((p) => { byName[p.name] = p; });
   }
 
   function tiles(d) {
@@ -89,7 +199,7 @@
     $("matches").innerHTML = list.map((m) => {
       const pl = playlists[m.playlist] || {};
       const teams = pl.teams && m.players.some((p) => p.team >= 0);
-      const player = (p) => '<li>' + lvl(p.level) + esc(p.name) + "</li>";
+      const player = (p) => '<li data-player="' + esc(p.name) + '">' + lvl(p.level) + emb(byName[p.name] || {}) + esc(p.name) + "</li>";
       let body;
       if (teams) {
         const side = (team, en, es) => '<div class="team ' + (team ? "blue" : "red") + '"><b>' + t(en, es) + "</b><ul>" +
@@ -103,6 +213,7 @@
       return '<div class="panel match"><div class="mhead"><span>' + esc(pl.name || m.playlist) + '</span><span class="state">' + state +
         "</span></div><h3>" + esc(m.title) + '</h3><div class="teams">' + body + "</div></div>";
     }).join("");
+    $("matches").querySelectorAll("li[data-player]").forEach((li) => li.addEventListener("click", () => card(li.dataset.player)));
   }
 
   function playlistTable(d) {
@@ -130,7 +241,7 @@
         .map((p) => Object.assign({ name: p.name }, p.ranks[topTab]))
         .sort((a, b) => b.level - a.level || b.xp - a.xp || b.wins - a.wins);
     }
-    const body = rows.slice(0, TOP).map((r, i) => '<tr data-player="' + esc(r.name) + '"><td class="rank">' + (i + 1) + "</td><td>" + esc(r.name) + "</td><td>" +
+    const body = rows.slice(0, TOP).map((r, i) => '<tr data-player="' + esc(r.name) + '"><td class="rank">' + (i + 1) + "</td><td>" + emb(byName[r.name] || {}) + esc(r.name) + "</td><td>" +
       lvl(r.level) + "</td><td>" + n(r.games) + "</td><td>" + n(r.wins) + "</td><td>" + pct(r.wins, r.games) + "</td><td>" + n(r.kills) +
       "</td><td>" + n(r.deaths) + "</td><td>" + kd(r.kills, r.deaths) + "</td><td>" + n(r.medals) + "</td></tr>").join("");
     $("top").innerHTML = "<thead><tr><th>#</th><th>" + t("Player", "Jugador") + "</th><th>" + t("Level", "Nivel") + "</th><th>" + t("Games", "Partidas") +
@@ -163,7 +274,7 @@
     const head = cols.map((c) => '<th data-sort="' + c[0] + '"' + (c[0] === sortKey ? ' class="' + (sortDown ? "down" : "up") + '"' : "") + ">" + t(c[1], c[2]) + "</th>").join("");
     const seen = (p) => p.online ? '<span class="online">' + { game: t("In a match", "En partida"), search: t("Searching", "Buscando"),
       lobby: t("In a lobby", "En una sala"), menu: t("Online", "En línea") }[p.status] + "</span>" : p.seen ? ago(p.seen) : "–";
-    const body = list.slice(0, shown).map((p) => '<tr data-player="' + esc(p.name) + '"><td>' + esc(p.name) + "</td><td>" + lvl(p.level) + "</td><td>" +
+    const body = list.slice(0, shown).map((p) => '<tr data-player="' + esc(p.name) + '"><td>' + emb(p) + esc(p.name) + "</td><td>" + lvl(p.level) + "</td><td>" +
       n(p.tot.games) + "</td><td>" + n(p.tot.wins) + "</td><td>" + pct(p.tot.wins, p.tot.games) + "</td><td>" + n(p.tot.kills) + "</td><td>" +
       n(p.tot.deaths) + "</td><td>" + kd(p.tot.kills, p.tot.deaths) + "</td><td>" + n(p.tot.medals) + "</td><td>" + seen(p) + "</td></tr>").join("");
     $("players").innerHTML = "<thead><tr>" + head + "</tr></thead><tbody>" + body + "</tbody>";
@@ -198,10 +309,16 @@
         (row.left ? " · " + t("left", "se fue") : "") + "</td><td>" + n(row.score) + "</td><td>" + (m.stats ? n(row.kills) + " / " + n(row.deaths) : "–") +
         "</td><td>" + lvl(row.level) + (row.xp ? ' <small>' + (row.xp > 0 ? "+" : "") + row.xp + "</small>" : "") + "</td></tr>";
     }).join("");
-    el.innerHTML = '<button type="button" class="close" id="card-close" aria-label="Close">&times;</button><h3>' + esc(p.name) + " " + lvl(p.level) + "</h3>" +
+    // the head: the emblem, the gamertag with the service tag, the rank icon big, and the Spartan / Elite in the
+    // player's colours (figure)
+    const tag = p.tag ? ' <span class="stag">[' + esc(p.tag) + "]</span>" : "";
+    $("card-body").innerHTML = '<div class="card-head"><div class="card-id">' + (emblem(p.look, 128) ? '<img class="emb big" src="' + emblem(p.look, 128) + '" width="128" height="128" alt="">' : '<span class="emb big"></span>') +
+      "<div><h3>" + esc(p.name) + tag + "</h3>" +
       '<p class="sub">' + (p.online ? '<span class="online">' + t("Online", "En línea") + "</span>" : p.seen ? t("Last seen ", "Última vez ") + ago(p.seen) : "") +
-      " · " + t(n(p.tot.games) + " games, " + n(p.tot.wins) + " wins", n(p.tot.games) + " partidas, " + n(p.tot.wins) + " victorias") +
-      " · " + n(p.tot.kills) + " " + t("kills", "bajas") + ", " + n(p.tot.deaths) + " " + t("deaths", "muertes") + " · " + n(p.experience) + " " + t("experience", "experiencia") + "</p>" +
+      "<br>" + t(n(p.tot.games) + " games, " + n(p.tot.wins) + " wins", n(p.tot.games) + " partidas, " + n(p.tot.wins) + " victorias") +
+      "<br>" + n(p.tot.kills) + " " + t("kills", "bajas") + ", " + n(p.tot.deaths) + " " + t("deaths", "muertes") + "<br>" + n(p.experience) + " " + t("experience", "experiencia") + "</p></div>" +
+      '<div class="card-rank">' + lvl(p.level, true) + "<small>" + t("Level " + (p.level || 1), "Nivel " + (p.level || 1)) + "</small></div></div>" +
+      '<div class="card-figure" id="card-figure"></div></div>' +
       '<div class="table-wrap"><table class="tbl"><thead><tr><th>' + t("Playlist", "Lista") + "</th><th>" + t("Level", "Nivel") + "</th><th>" + t("Games", "Partidas") +
       "</th><th>" + t("Wins", "Victorias") + "</th><th>" + t("Win %", "% vict.") + "</th><th>" + t("Kills", "Bajas") + "</th><th>" + t("Deaths", "Muertes") +
       "</th><th>K/D</th><th>" + t("Assists", "Asist.") + "</th><th>" + t("Head shots", "A la cabeza") + "</th><th>" + t("Suicides", "Suicidios") + "</th><th>" +
@@ -211,11 +328,20 @@
       (mine ? '<div class="label">' + t("Last matches", "Últimas partidas") + '</div><div class="table-wrap"><table class="tbl"><thead><tr><th>' + t("When", "Cuándo") +
         "</th><th>" + t("Playlist", "Lista") + "</th><th>" + t("Game", "Partida") + "</th><th>" + t("Result", "Resultado") + "</th><th>" + t("Score", "Puntos") +
         "</th><th>" + t("Kills / deaths", "Bajas / muertes") + "</th><th>" + t("Level", "Nivel") + "</th></tr></thead><tbody>" + mine + "</tbody></table></div>" : "");
+    figure(p.look, $("card-figure"));
     el.hidden = false;
+    el.scrollTop = 0;
+    document.body.classList.add("modal-open");
     history.replaceState(null, "", "#p=" + encodeURIComponent(name));
-    $("card-close").addEventListener("click", () => { el.hidden = true; history.replaceState(null, "", location.pathname); });
-    el.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
+  function closeCard() {
+    $("card").hidden = true;
+    document.body.classList.remove("modal-open");
+    history.replaceState(null, "", location.pathname);
+  }
+  $("card-close").addEventListener("click", closeCard);
+  $("card").addEventListener("click", (e) => { if (e.target === $("card")) closeCard(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !$("card").hidden) closeCard(); });
 
   // who won a played match: the team with the higher total (a team that all left lost), or the top score
   function result(m) {
@@ -247,7 +373,7 @@
         outcome = res.tie ? t("Tie", "Empate") : '<span class="won">' + esc(res.winner) + "</span>";
       }
       const rows = m.rows.slice().sort((a, b) => (m.teams && a.team !== b.team ? a.team - b.team : b.score - a.score)).map((r) =>
-        '<tr class="' + (m.teams ? (r.team ? "t-blue" : "t-red") : "") + (r.left ? " left" : "") + '"><td data-player="' + esc(r.name) + '">' + lvl(r.level) + esc(r.name) +
+        '<tr class="' + (m.teams ? (r.team ? "t-blue" : "t-red") : "") + (r.left ? " left" : "") + '"><td data-player="' + esc(r.name) + '">' + lvl(r.level) + emb(byName[r.name] || {}) + esc(r.name) +
         (r.left ? ' <small>' + t("left", "se fue") + "</small>" : "") + "</td><td>" + n(r.score) + "</td><td>" + (m.stats ? n(r.kills) : "–") + "</td><td>" +
         (m.stats ? n(r.deaths) : "–") + "</td><td>" + (m.stats ? n(r.assists) : "–") + "</td><td>" + (m.stats ? n(r.medals) : "–") + "</td><td>" +
         (r.xp ? (r.xp > 0 ? "+" : "") + r.xp : "–") + "</td></tr>").join("");
@@ -297,6 +423,6 @@
 
   $("find").addEventListener("input", () => { filter = $("find").value.trim(); shown = PAGE; if (data) playerTable(); });
   $("more").addEventListener("click", () => { shown += PAGE; playerTable(); });
-  load();
+  loadEmblems().then(load);
   setInterval(load, REFRESH);
 })();
