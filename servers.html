@@ -4,60 +4,73 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Servers · Project Gravemind</title>
-<meta name="description" content="Halo 2 from The Master Chief Collection as a standalone PC game: GRAVEMIND LIVE matchmaking with Halo 2's ranks, dedicated servers, 24 players, online co-op, voice chat and mods. Open beta, free.">
-<meta property="og:title" content="Project Gravemind · Open beta">
-<meta property="og:description" content="Halo 2 from MCC as a standalone PC game: matchmaking with Halo 2's ranks, dedicated servers, 24 players, online co-op.">
-<meta property="og:image" content="img/ingame.jpg">
+<meta name="description" content="Project Gravemind's dedicated servers, and how to run your own.">
+<meta name="theme-color" content="#030814">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Project Gravemind">
+<meta property="og:title" content="Servers · Project Gravemind">
+<meta property="og:description" content="Project Gravemind's dedicated servers, and how to run your own.">
+<meta property="og:image" content="https://projectgravemind.com/img/ingame.jpg">
+<meta property="og:url" content="https://projectgravemind.com/servers.html">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://projectgravemind.com/servers.html">
+<link rel="icon" href="img/logo.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600&family=Michroma&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
-<div class="backdrop" aria-hidden="true"></div>
+<body class="servers">
+<a class="skip" href="#main"><span lang="en">Skip to content</span><span lang="es">Saltar al contenido</span></a>
+<div class="bg" aria-hidden="true"><video muted loop playsinline autoplay preload="none" poster="media/hero-poster.jpg" tabindex="-1"></video></div>
+<div class="bg-lines" aria-hidden="true"></div>
 <header class="topbar">
-  <a class="brand" href="index.html">PROJECT <b>GRAVEMIND</b></a>
-  <div class="live-badge"><span class="dot"></span>OPEN BETA · NOW LIVE</div>
-  <nav class="nav">
-    <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
-    <a href="features.html"><span lang="en">Features</span><span lang="es">Funciones</span></a>
-    <a href="live.html">GRAVEMIND LIVE</a>
-    <a href="stats.html"><span lang="en">Stats</span><span lang="es">Estadísticas</span></a>
-    <a href="servers.html" class="on"><span lang="en">Servers</span><span lang="es">Servidores</span></a>
-    <a href="download.html"><span lang="en">Download</span><span lang="es">Descargar</span></a>
-    <a href="faq.html">FAQ</a>
-  </nav>
-  <div class="lang" role="group" aria-label="Language">
-    <button type="button" data-set-lang="en">EN</button>
-    <button type="button" data-set-lang="es">ES</button>
+  <div class="topbar-in">
+    <a class="brand" href="index.html"><img src="img/logo.png" alt="" width="30" height="30"><span><span class="long">PROJECT </span><b>GRAVEMIND</b></span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
+      <a href="features.html"><span lang="en">Features</span><span lang="es">Funciones</span></a>
+      <a href="live.html">GRAVEMIND LIVE</a>
+      <a href="stats.html"><span lang="en">Stats</span><span lang="es">Estadísticas</span></a>
+      <a href="servers.html" class="on" aria-current="page"><span lang="en">Servers</span><span lang="es">Servidores</span></a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+    <div class="top-actions">
+      <div class="lang" role="group" aria-label="Language / Idioma">
+        <button type="button" data-set-lang="en" aria-label="English">EN</button>
+        <button type="button" data-set-lang="es" aria-label="Español">ES</button>
+      </div>
+      <a class="btn-sm" href="download.html"><span lang="en">Download</span><span lang="es">Descargar</span></a>
+    </div>
   </div>
 </header>
-<main>
+<main id="main">
 
 <section class="page-hero"><div class="wrap">
-  <div class="band"><h2><span lang="en">Servers</span><span lang="es">Servidores</span></h2></div>
-  <p class="lead"><span lang="en">They're in <b>FIND GAMES</b>. Players vote the next map in the lobby.</span><span lang="es">Están en <b>BUSCAR PARTIDAS</b>. Los jugadores votan el siguiente mapa en la sala.</span></p>
+  <div class="section-head"><p class="eyebrow"><span lang="en">Servers</span><span lang="es">Servidores</span></p><h1 class="h"><span lang="en">Always a game to join</span><span lang="es">Siempre hay una partida</span></h1><p class="lead"><span lang="en">Our dedicated servers are listed in <b>FIND GAMES</b>, open around the clock. Between matches, players vote for the next map and mode in the lobby.</span><span lang="es">Nuestros servidores dedicados aparecen en <b>BUSCAR PARTIDAS</b> y están abiertos a todas horas. Entre partidas, los jugadores votan en la sala el siguiente mapa y modo.</span></p></div>
 </div></section>
 <section class="reveal"><div class="wrap">
   <div class="table-wrap"><table class="servers">
-    <thead><tr><th><span lang="en">Server</span><span lang="es">Servidor</span></th><th><span lang="en">Map · mode</span><span lang="es">Mapa · modo</span></th><th><span lang="en">Players</span><span lang="es">Jugadores</span></th></tr></thead>
+    <thead><tr><th><span lang="en">Server</span><span lang="es">Servidor</span></th><th><span lang="en">What's played</span><span lang="es">Qué se juega</span></th><th><span lang="en">Players</span><span lang="es">Jugadores</span></th></tr></thead>
     <tbody>
-      <tr><td>BR &amp; Sniper<span class="sub"><span lang="en">Dedicated</span><span lang="es">Dedicado</span></span></td><td><span lang="en">Free for all, battle rifle and sniper. Lockout, Midship, Ivory Tower, Foundation.</span><span lang="es">Todos contra todos, rifle de batalla y francotirador. Encerrona, Centro de nave, Torre de marfil, Cimientos.</span></td><td>16</td></tr>
-      <tr><td>MLG 4v4<span class="sub"><span lang="en">Dedicated</span><span lang="es">Dedicado</span></span></td><td><span lang="en">Team Slayer to 50, battle rifle, no radar.</span><span lang="es">Asesino por equipos a 50, rifle de batalla, sin radar.</span></td><td>8</td></tr>
-      <tr><td>Big Maps: Coagulation<span class="sub"><span lang="en">Dedicated</span><span lang="es">Dedicado</span></span></td><td><span lang="en">CTF, Oddball and Territories on the big maps.</span><span lang="es">Captura la bandera, bola loca y territorios en los mapas grandes.</span></td><td>16</td></tr>
-      <tr><td>Big Maps: Zanzibar<span class="sub"><span lang="en">Dedicated</span><span lang="es">Dedicado</span></span></td><td><span lang="en">Same rotation, more Zanzibar.</span><span lang="es">La misma rotación, más Zanzíbar.</span></td><td>16</td></tr>
-      <tr><td>Mod: Halo 2 Uncut<span class="sub"><span lang="en">Dedicated · mod</span><span lang="es">Dedicado · mod</span></span></td><td><span lang="en">Slayer on Halo 2: Uncut. The mod downloads when you join.</span><span lang="es">Asesino en Halo 2: Uncut. El mod se descarga al entrar.</span></td><td>16</td></tr>
+      <tr><td>BR &amp; Sniper<span class="sub"><span lang="en">Dedicated</span><span lang="es">Dedicado</span></span></td><td><span lang="en">Free for all with battle rifles and snipers on Lockout, Midship, Ivory Tower and Foundation.</span><span lang="es">Todos contra todos con rifle de batalla y francotirador en Encerrona, Centro de nave, Torre de marfil y Cimientos.</span></td><td>24</td></tr>
+      <tr><td>MLG 4v4<span class="sub"><span lang="en">Dedicated</span><span lang="es">Dedicado</span></span></td><td><span lang="en">Team Slayer to 50, battle rifle starts, no radar.</span><span lang="es">Asesino por equipos a 50, se empieza con rifle de batalla, sin radar.</span></td><td>8</td></tr>
+      <tr><td>2 vs 2<span class="sub"><span lang="en">Dedicated</span><span lang="es">Dedicado</span></span></td><td><span lang="en">Two-on-two team games.</span><span lang="es">Partidas por equipos de dos contra dos.</span></td><td>4</td></tr>
+      <tr><td>1 vs 1<span class="sub"><span lang="en">Dedicated</span><span lang="es">Dedicado</span></span></td><td><span lang="en">One-on-one duels.</span><span lang="es">Duelos uno contra uno.</span></td><td>2</td></tr>
+      <tr><td>Big Maps: Coagulation<span class="sub"><span lang="en">Dedicated</span><span lang="es">Dedicado</span></span></td><td><span lang="en">Capture the Flag, Oddball and Territories on the large maps.</span><span lang="es">Captura la bandera, Bola loca y Territorios en los mapas grandes.</span></td><td>24</td></tr>
+      <tr><td>Big Maps: Zanzibar<span class="sub"><span lang="en">Dedicated</span><span lang="es">Dedicado</span></span></td><td><span lang="en">The same rotation, with more Zanzibar.</span><span lang="es">La misma rotación, con más Zanzíbar.</span></td><td>24</td></tr>
+      <tr><td>Mod: Halo 2 Uncut<span class="sub"><span lang="en">Dedicated · mod</span><span lang="es">Dedicado · mod</span></span></td><td><span lang="en">Slayer on Halo 2: Uncut. The mod downloads when you join.</span><span lang="es">Asesino en Halo 2: Uncut. El mod se descarga al entrar.</span></td><td>24</td></tr>
     </tbody>
   </table></div>
+</div></section>
 
-  <div class="band"><h2><span lang="en">Run your own server</span><span lang="es">Monta tu servidor</span></h2></div>
-  <p><span lang="en">Windows 10 or 11. With MCC installed on that PC the server hosts the matches itself; without it, it still works and the first player hosts.</span><span lang="es">Windows 10 u 11. Si ese PC tiene MCC, el servidor aloja las partidas él mismo; si no, también funciona y las aloja el primer jugador.</span></p>
-  <p class="note"><span lang="en"><b>Linux:</b> we're working on bringing the dedicated servers to Linux.</span><span lang="es"><b>Linux:</b> estamos trabajando para llevar los servidores dedicados a Linux.</span></p>
+<section class="reveal"><div class="wrap">
+  <div class="section-head"><p class="eyebrow"><span lang="en">Host</span><span lang="es">Aloja</span></p><h2 class="h"><span lang="en">Run your own server</span><span lang="es">Monta tu propio servidor</span></h2><p class="lead"><span lang="en">You need Windows 10 or 11. If that PC has MCC installed, the server hosts the matches itself; without it, the server still works and the first player to join hosts.</span><span lang="es">Necesitas Windows 10 u 11. Si ese PC tiene MCC instalado, el servidor aloja las partidas él mismo; si no, también funciona y aloja el primer jugador que entra.</span></p></div>
   <ol class="steps">
     <li><span lang="en">Unzip Project Gravemind into a folder, for example <code>C:\H2Server</code>.</span><span lang="es">Descomprime Project Gravemind en una carpeta, por ejemplo <code>C:\H2Server</code>.</span></li>
-    <li><span lang="en">Open a terminal in that folder and run it once. It creates <code>dedicated.toml</code> and <code>playlists\ejemplo.json</code> and closes by itself:</span><span lang="es">Abre una terminal en esa carpeta y ejecútalo una vez. Crea <code>dedicated.toml</code> y <code>playlists\ejemplo.json</code> y se cierra solo:</span>
+    <li><span lang="en">Open a terminal in that folder and run it once. It creates <code>dedicated.toml</code> and <code>playlists\ejemplo.json</code>, then closes:</span><span lang="es">Abre una terminal en esa carpeta y ejecútalo una vez. Crea <code>dedicated.toml</code> y <code>playlists\ejemplo.json</code> y se cierra:</span>
 <pre><code>h2gravemind.exe --servers</code></pre></li>
-    <li><span lang="en">Edit <code>dedicated.toml</code>: one <code>[[server]]</code> per server, each with its own port.</span><span lang="es">Edita <code>dedicated.toml</code>: un <code>[[server]]</code> por servidor, cada uno con su puerto.</span>
+    <li><span lang="en">Edit <code>dedicated.toml</code>: one <code>[[server]]</code> block per server, each on its own port.</span><span lang="es">Edita <code>dedicated.toml</code>: un bloque <code>[[server]]</code> por servidor, cada uno en su puerto.</span>
 <pre><code>master = "master01.gravemind.haloarchive.com:11770, master02.gravemind.haloarchive.com:11770"
 admins = ["your player_id"]        # Documents\My Games\Project Gravemind\h2gravemind.ini
 
@@ -77,28 +90,50 @@ game = "slayer"
 name = "My Playlist"
 port = 11781
 playlist = "ejemplo"               # playlists\ejemplo.json: players vote between 3 games</code></pre></li>
-    <li><span lang="en">On your router, forward each server's port as <b>UDP</b> to this PC (11780, 11781...). Let Windows Firewall allow it the first time.</span><span lang="es">En tu router, abre el puerto de cada servidor como <b>UDP</b> hacia este PC (11780, 11781...). Deja que el Firewall de Windows lo permita la primera vez.</span></li>
-    <li><span lang="en">Run it again. Each server gets its own window, restarts by itself if it stops and logs to <code>data\&lt;name&gt;\server.log</code>. In a minute they show in everyone's FIND GAMES.</span><span lang="es">Ejecútalo otra vez. Cada servidor tiene su ventana, se reinicia solo si se cae y guarda su registro en <code>data\&lt;nombre&gt;\server.log</code>. En un minuto salen en BUSCAR PARTIDAS de todos.</span>
+    <li><span lang="en">On your router, forward each server's port as <b>UDP</b> to this PC (11780, 11781 and so on), and allow it in Windows Firewall when asked.</span><span lang="es">En tu router, redirige el puerto de cada servidor como <b>UDP</b> hacia este PC (11780, 11781, etc.) y permítelo en el Firewall de Windows cuando lo pida.</span></li>
+    <li><span lang="en">Run it again. Each server gets its own window, restarts if it stops and writes its log to <code>data\&lt;name&gt;\server.log</code>. Within a minute it appears in everyone's FIND GAMES.</span><span lang="es">Ejecútalo otra vez. Cada servidor abre su ventana, se reinicia si se detiene y guarda su registro en <code>data\&lt;nombre&gt;\server.log</code>. En menos de un minuto aparece en BUSCAR PARTIDAS para todos.</span>
 <pre><code>h2gravemind.exe --servers</code></pre></li>
-    <li><span lang="en">As an admin you get a box in the server's lobby for commands: <code>kick #2</code>, <code>ban &quot;Name&quot; 1d</code>, <code>map lockout</code>.</span><span lang="es">Como administrador tienes un cuadro en la sala del servidor para comandos: <code>kick #2</code>, <code>ban &quot;Nombre&quot; 1d</code>, <code>map lockout</code>.</span></li>
+    <li><span lang="en">As an admin, you get a command box in the server's lobby: <code>kick #2</code>, <code>ban &quot;Name&quot; 1d</code>, <code>map lockout</code>.</span><span lang="es">Como administrador tienes un cuadro de comandos en la sala del servidor: <code>kick #2</code>, <code>ban &quot;Nombre&quot; 1d</code>, <code>map lockout</code>.</span></li>
   </ol>
-  <p><span lang="en">Hosting a custom game instead? Only the host opens <b>UDP 11774</b>; or play over Radmin VPN, ZeroTier or Tailscale.</span><span lang="es">¿Solo una partida personalizada? Solo el anfitrión abre el puerto <b>UDP 11774</b>; o jugad por Radmin VPN, ZeroTier o Tailscale.</span></p>
+  <div class="note info"><span lang="en"><b>Just a custom game?</b> Only the host needs to open <b>UDP 11774</b>. Or play over Radmin VPN, ZeroTier or Tailscale with no ports at all. Dedicated servers on Linux are in the works.</span><span lang="es"><b>¿Solo una partida personalizada?</b> Únicamente el anfitrión tiene que abrir el puerto <b>UDP 11774</b>. O jugad por Radmin VPN, ZeroTier o Tailscale sin abrir nada. Los servidores dedicados en Linux están en desarrollo.</span></div>
+  <p class="muted"><span lang="en">If you run a server, you're responsible for it: its moderation, its logs and the laws where it runs. See <a href="privacy.html">Privacy &amp; legal</a>.</span><span lang="es">Si montas un servidor, eres responsable de él: su moderación, sus registros y las leyes del lugar donde funciona. Consulta <a href="privacy.html">Privacidad y aviso legal</a>.</span></p>
 </div></section>
 
 </main>
 <footer>
-  <div class="wrap">
+  <div class="foot">
     <div>
-      <p><b style="color:#fff">PROJECT GRAVEMIND</b></p>
-      <p><span lang="en">A free fan project, inspired by Project Reclaimer. Not affiliated with or endorsed by Microsoft, Xbox Game Studios or Halo Studios. Halo and Halo 2 are trademarks of Microsoft. No game files are distributed.</span><span lang="es">Un proyecto gratuito de fans, inspirado en Project Reclaimer. Sin relación ni respaldo de Microsoft, Xbox Game Studios ni Halo Studios. Halo y Halo 2 son marcas de Microsoft. No se distribuyen archivos del juego.</span></p>
+      <a class="brand" href="index.html"><img src="img/logo.png" alt="" width="30" height="30"><span>PROJECT <b>GRAVEMIND</b></span></a>
+      <p><span lang="en">Halo 2 from your own copy of The Master Chief Collection, as a PC game of its own. A free fan project, inspired by Project Reclaimer and made by volunteers.</span><span lang="es">Halo 2 desde tu propia copia de The Master Chief Collection, como un juego de PC independiente. Un proyecto de fans gratuito, inspirado en Project Reclaimer y hecho por voluntarios.</span></p>
     </div>
-    <div class="legend">
-      <span><i class="a">A</i><a href="download.html"><span lang="en">DOWNLOAD</span><span lang="es">DESCARGAR</span></a></span>
-      <span><i class="b">B</i><a href="index.html"><span lang="en">HOME</span><span lang="es">INICIO</span></a></span>
+    <div>
+      <h4><span lang="en">Explore</span><span lang="es">Explora</span></h4>
+      <ul>
+        <li><a href="features.html"><span lang="en">Features</span><span lang="es">Funciones</span></a></li>
+        <li><a href="live.html">GRAVEMIND LIVE</a></li>
+        <li><a href="stats.html"><span lang="en">Stats</span><span lang="es">Estadísticas</span></a></li>
+        <li><a href="servers.html"><span lang="en">Servers</span><span lang="es">Servidores</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <h4><span lang="en">Help</span><span lang="es">Ayuda</span></h4>
+      <ul>
+        <li><a href="download.html"><span lang="en">Download</span><span lang="es">Descargar</span></a></li>
+        <li><a href="faq.html"><span lang="en">FAQ</span><span lang="es">Preguntas frecuentes</span></a></li>
+        <li><a href="https://discord.gg/7nAmnwnQqb" target="_blank" rel="noopener">Discord</a></li>
+        <li><a href="privacy.html"><span lang="en">Privacy &amp; legal</span><span lang="es">Privacidad y aviso legal</span></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="legal-line">
+    <p><span lang="en">Project Gravemind is not affiliated with or endorsed by Microsoft, Xbox Game Studios or Halo Studios. Halo and Halo 2 are trademarks of Microsoft; Steam is a trademark of Valve. The download contains no game files: it runs the copy of Halo 2 you own.</span><span lang="es">Project Gravemind no tiene relación con Microsoft, Xbox Game Studios ni Halo Studios, ni cuenta con su respaldo. Halo y Halo 2 son marcas de Microsoft; Steam es una marca de Valve. La descarga no contiene archivos del juego: ejecuta la copia de Halo 2 que tienes.</span></p>
+    <div class="legend" aria-hidden="true">
+      <span><i class="a">A</i><a href="download.html" tabindex="-1"><span lang="en">DOWNLOAD</span><span lang="es">DESCARGAR</span></a></span>
+      <span><i class="b">B</i><a href="index.html" tabindex="-1"><span lang="en">HOME</span><span lang="es">INICIO</span></a></span>
     </div>
   </div>
 </footer>
-<div class="viewer" id="viewer"><img alt=""></div>
+<div class="viewer" id="viewer" tabindex="-1" role="dialog" aria-modal="true" aria-label="Screenshot"><img alt=""></div>
 <script src="main.js"></script>
 </body>
 </html>

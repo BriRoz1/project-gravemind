@@ -3,92 +3,161 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Project Gravemind</title>
-<meta name="description" content="Halo 2 from The Master Chief Collection as a standalone PC game: GRAVEMIND LIVE matchmaking with Halo 2's ranks, dedicated servers, 24 players, online co-op, voice chat and mods. Open beta, free.">
-<meta property="og:title" content="Project Gravemind · Open beta">
-<meta property="og:description" content="Halo 2 from MCC as a standalone PC game: matchmaking with Halo 2's ranks, dedicated servers, 24 players, online co-op.">
-<meta property="og:image" content="img/ingame.jpg">
+<title>Project Gravemind · Halo 2 for PC, from your MCC</title>
+<meta name="description" content="Halo 2 from your own copy of The Master Chief Collection, as a standalone PC game: GRAVEMIND LIVE matchmaking with the original ranks, dedicated servers, 24-player matches and online co-op for 16. Free open beta.">
+<meta name="theme-color" content="#030814">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Project Gravemind">
+<meta property="og:title" content="Project Gravemind · Halo 2 for PC, from your MCC">
+<meta property="og:description" content="Halo 2 from your own copy of The Master Chief Collection, as a standalone PC game: GRAVEMIND LIVE matchmaking with the original ranks, dedicated servers, 24-player matches and online co-op for 16. Free open beta.">
+<meta property="og:image" content="https://projectgravemind.com/img/ingame.jpg">
+<meta property="og:url" content="https://projectgravemind.com/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://projectgravemind.com/">
+<link rel="icon" href="img/logo.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600&family=Michroma&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
-<div class="backdrop" aria-hidden="true"></div>
+<body class="home">
+<a class="skip" href="#main"><span lang="en">Skip to content</span><span lang="es">Saltar al contenido</span></a>
+<div class="bg" aria-hidden="true"><video muted loop playsinline autoplay preload="none" poster="media/hero-poster.jpg" tabindex="-1"></video></div>
+<div class="bg-lines" aria-hidden="true"></div>
 <header class="topbar">
-  <a class="brand" href="index.html">PROJECT <b>GRAVEMIND</b></a>
-  <div class="live-badge"><span class="dot"></span>OPEN BETA · NOW LIVE</div>
-  <nav class="nav">
-    <a href="index.html" class="on"><span lang="en">Home</span><span lang="es">Inicio</span></a>
-    <a href="features.html"><span lang="en">Features</span><span lang="es">Funciones</span></a>
-    <a href="live.html">GRAVEMIND LIVE</a>
-    <a href="stats.html"><span lang="en">Stats</span><span lang="es">Estadísticas</span></a>
-    <a href="servers.html"><span lang="en">Servers</span><span lang="es">Servidores</span></a>
-    <a href="download.html"><span lang="en">Download</span><span lang="es">Descargar</span></a>
-    <a href="faq.html">FAQ</a>
-  </nav>
-  <div class="lang" role="group" aria-label="Language">
-    <button type="button" data-set-lang="en">EN</button>
-    <button type="button" data-set-lang="es">ES</button>
+  <div class="topbar-in">
+    <a class="brand" href="index.html"><img src="img/logo.png" alt="" width="30" height="30"><span><span class="long">PROJECT </span><b>GRAVEMIND</b></span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html" class="on" aria-current="page"><span lang="en">Home</span><span lang="es">Inicio</span></a>
+      <a href="features.html"><span lang="en">Features</span><span lang="es">Funciones</span></a>
+      <a href="live.html">GRAVEMIND LIVE</a>
+      <a href="stats.html"><span lang="en">Stats</span><span lang="es">Estadísticas</span></a>
+      <a href="servers.html"><span lang="en">Servers</span><span lang="es">Servidores</span></a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+    <div class="top-actions">
+      <div class="lang" role="group" aria-label="Language / Idioma">
+        <button type="button" data-set-lang="en" aria-label="English">EN</button>
+        <button type="button" data-set-lang="es" aria-label="Español">ES</button>
+      </div>
+      <a class="btn-sm" href="download.html"><span lang="en">Download</span><span lang="es">Descargar</span></a>
+    </div>
   </div>
 </header>
-<main>
+<main id="main">
 
-<div class="hero">
-  <div class="hero-bg" aria-hidden="true"></div>
-  <div class="hero-inner">
-    <div class="live-badge"><span class="dot"></span>OPEN BETA · NOW LIVE</div>
-    <div class="kicker">Halo 2 · Master Chief Collection · PC</div>
-    <h1 class="title">PROJECT<br>GRAVEMIND</h1>
-    <p class="subtitle"><span lang="en">The Halo 2 from your MCC, outside MCC. With matchmaking, the original ranks, dedicated servers and up to 24 players.</span><span lang="es">El Halo 2 de tu MCC, fuera de MCC. Con matchmaking, los rangos originales, servidores dedicados y hasta 24 jugadores.</span></p>
-    <div class="hero-actions">
-      <span class="btn-wrap"><a class="btn" href="download.html"><span lang="en">Download free</span><span lang="es">Descargar gratis</span></a></span>
-      <span class="btn-wrap"><a class="btn ghost" href="features.html"><span lang="en">What's new</span><span lang="es">Novedades</span></a></span>
+<section class="hero">
+  <div class="hero-in">
+    <div class="pill rise"><span class="dot"></span><span lang="en">Open beta · Free</span><span lang="es">Beta abierta · Gratis</span></div>
+    <p class="kicker rise">Halo 2 · The Master Chief Collection · PC</p>
+    <h1 class="title rise">PROJECT<br>GRAVEMIND</h1>
+    <p class="subtitle rise"><span lang="en">The Halo 2 you already own in The Master Chief Collection, running as a PC game of its own. With matchmaking and the original ranks, dedicated servers, 24-player matches and online co-op for up to 16.</span><span lang="es">El Halo 2 que ya tienes en The Master Chief Collection, funcionando como un juego de PC independiente. Con matchmaking y los rangos originales, servidores dedicados, partidas de 24 jugadores y cooperativo en línea para hasta 16.</span></p>
+    <div class="actions rise">
+      <span class="btn-wrap"><a class="btn" href="download.html"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M4 19h16"/></svg><span lang="en">Download free</span><span lang="es">Descargar gratis</span></a></span>
+      <span class="btn-wrap"><a class="btn ghost" href="features.html"><span lang="en">See what it does</span><span lang="es">Qué incluye</span></a></span>
     </div>
+    <p class="hero-note rise"><span lang="en">Requires Halo: The Master Chief Collection on Steam, with Halo 2 installed. Windows 10 or 11.</span><span lang="es">Necesitas Halo: The Master Chief Collection en Steam, con Halo 2 instalado. Windows 10 u 11.</span></p>
   </div>
-</div>
-<section class="reveal">
-  <div class="wrap">
-    <div class="band"><h2><span lang="en">What is it</span><span lang="es">Qué es</span></h2></div>
-    <p class="lead"><span lang="en">A launcher that runs MCC's Halo 2 on its own. It uses your Steam copy, nothing gets installed and your MCC stays as it is. Same idea as Project Reclaimer, for Halo 2.</span><span lang="es">Un lanzador que abre el Halo 2 de MCC por su cuenta. Usa tu copia de Steam, no instala nada y tu MCC queda igual. La misma idea que Project Reclaimer, pero para Halo 2.</span></p>
-    <div class="grid three">
-      <div class="panel"><div class="stat">24<small><span lang="en">players per match</span><span lang="es">jugadores por partida</span></small></div></div>
-      <div class="panel"><div class="stat">1-50<small><span lang="en">ranks per playlist</span><span lang="es">rangos por lista</span></small></div></div>
-      <div class="panel"><div class="stat">16<small><span lang="en">players in co-op</span><span lang="es">jugadores en cooperativo</span></small></div></div>
-    </div>
-    <div class="label"><span lang="en">New</span><span lang="es">Novedades</span></div>
-    <div class="grid three">
-      <div class="panel"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M5.6 5.6a9 9 0 0 0 0 12.8M18.4 5.6a9 9 0 0 1 0 12.8M8.5 8.5a5 5 0 0 0 0 7M15.5 8.5a5 5 0 0 1 0 7"/></svg><h3><span lang="en">GRAVEMIND LIVE</span><span lang="es">GRAVEMIND LIVE</span></h3><p><span lang="en">Halo 2's matchmaking playlists, party and friends list.</span><span lang="es">Las listas de matchmaking de Halo 2, grupo y lista de amigos.</span></p></div>
-      <div class="panel"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg><h3><span lang="en">Find games</span><span lang="es">Buscar partidas</span></h3><p><span lang="en">Every open game and server, with ping, filters and favourites.</span><span lang="es">Todas las partidas y servidores abiertos, con ping, filtros y favoritas.</span></p></div>
-      <div class="panel"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v12M7 10l5 5 5-5M4 19h16"/></svg><h3><span lang="en">Steam Workshop</span><span lang="es">Steam Workshop</span></h3><p><span lang="en">Join a game on a mod you don't have and it downloads.</span><span lang="es">Si entras a una partida con un mod que no tienes, se descarga.</span></p></div>
-    </div>
-    <div class="label"><span lang="en">Screenshots</span><span lang="es">Capturas</span></div>
-    <div class="shots">
-      <figure class="shot"><img src="img/ingame.jpg" alt="Lockout" loading="lazy"><figcaption><span lang="en">In game · Lockout</span><span lang="es">En partida · Encerrona</span></figcaption></figure>
-      <figure class="shot"><img src="img/menu.jpg" alt="Main menu" loading="lazy"><figcaption><span lang="en">Main menu</span><span lang="es">Menú principal</span></figcaption></figure>
-      <figure class="shot"><img src="img/browser.jpg" alt="Find games" loading="lazy"><figcaption><span lang="en">Find games</span><span lang="es">Buscar partidas</span></figcaption></figure>
-      <figure class="shot"><img src="img/lobby.jpg" alt="Lobby" loading="lazy"><figcaption><span lang="en">Lobby</span><span lang="es">Sala</span></figcaption></figure>
-      <figure class="shot"><img src="img/customize.jpg" alt="Customization" loading="lazy"><figcaption><span lang="en">Customization</span><span lang="es">Personalizar</span></figcaption></figure>
-      <figure class="shot"><img src="img/nameplates.jpg" alt="Nameplates" loading="lazy"><figcaption><span lang="en">Every MCC nameplate</span><span lang="es">Todas las placas de MCC</span></figcaption></figure>
-      <figure class="shot"><img src="img/settings.jpg" alt="Settings" loading="lazy"><figcaption><span lang="en">Settings</span><span lang="es">Ajustes</span></figcaption></figure>
-    </div>
-  </div>
+  <span class="scroll-cue" aria-hidden="true"></span>
 </section>
+
+<section class="tight reveal"><div class="wrap">
+  <div class="figures">
+    <div class="figure"><b>24</b><span><span lang="en">players in a multiplayer match</span><span lang="es">jugadores por partida multijugador</span></span></div>
+    <div class="figure"><b>16</b><span><span lang="en">players in online co-op campaign</span><span lang="es">jugadores en la campaña cooperativa en línea</span></span></div>
+    <div class="figure"><b>1–50</b><span><span lang="en">ranks in every ranked playlist</span><span lang="es">rangos en cada lista competitiva</span></span></div>
+    <div class="figure"><b>8</b><span><span lang="en">languages, text and voices</span><span lang="es">idiomas, con textos y voces</span></span></div>
+  </div>
+</div></section>
+
+<section class="reveal"><div class="wrap split">
+  <div>
+    <div class="section-head"><p class="eyebrow"><span lang="en">What it is</span><span lang="es">Qué es</span></p><h2 class="h"><span lang="en">Your Halo 2, on its own</span><span lang="es">Tu Halo 2, por su cuenta</span></h2></div>
+    <p><span lang="en">Project Gravemind is a free launcher that opens Halo 2 straight from your Steam copy of The Master Chief Collection. It doesn't install anything and never changes a file of MCC: the game is read from where Steam put it, and your settings live in a folder of their own.</span><span lang="es">Project Gravemind es un lanzador gratuito que abre Halo 2 directamente desde tu copia de The Master Chief Collection en Steam. No instala nada y no modifica ni un archivo de MCC: el juego se lee desde donde lo dejó Steam y tus ajustes se guardan en su propia carpeta.</span></p>
+    <p><span lang="en">Around the game, it brings together what Halo 2 on PC never had in one place: its own matchmaking with the original ranks, dedicated servers, bigger matches and a co-op campaign you can play online. The same idea as Project Reclaimer, built for Halo 2.</span><span lang="es">Alrededor del juego reúne lo que Halo 2 en PC nunca tuvo en un mismo sitio: matchmaking propio con los rangos originales, servidores dedicados, partidas más grandes y una campaña cooperativa que se juega en línea. La misma idea que Project Reclaimer, hecha para Halo 2.</span></p>
+    <ul lang="en" class="ticks"><li>Runs the copy of Halo 2 you already own</li><li>The download contains no game files</li><li>Updates itself from GitHub when a new version is out</li></ul><ul lang="es" class="ticks"><li>Usa la copia de Halo 2 que ya tienes</li><li>La descarga no contiene archivos del juego</li><li>Se actualiza solo desde GitHub cuando sale una versión nueva</li></ul>
+  </div>
+  <figure class="frame"><img src="img/menu.jpg" alt="Project Gravemind main menu" loading="lazy" width="1600" height="900"><figcaption><span lang="en">The main menu</span><span lang="es">El menú principal</span></figcaption></figure>
+</div></section>
+
+<section class="reveal"><div class="wrap">
+  <div class="section-head"><p class="eyebrow"><span lang="en">Online</span><span lang="es">En línea</span></p><h2 class="h"><span lang="en">Built for playing together</span><span lang="es">Hecho para jugar en compañía</span></h2><p class="lead"><span lang="en">Halo 2 was at its best online. These are the pieces that bring that back.</span><span lang="es">Halo 2 brillaba en línea. Estas son las piezas que lo devuelven.</span></p></div>
+  <div class="grid three">
+    <div class="panel card"><svg class="ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M5.6 5.6a9 9 0 0 0 0 12.8M18.4 5.6a9 9 0 0 1 0 12.8M8.5 8.5a5 5 0 0 0 0 7M15.5 8.5a5 5 0 0 1 0 7"/></svg><h3><span lang="en">GRAVEMIND LIVE</span><span lang="es">GRAVEMIND LIVE</span></h3><p><span lang="en">Matchmaking playlists, parties and a friends list, modelled on Halo 2's Xbox Live. Ranked and casual.</span><span lang="es">Listas de matchmaking, grupos y lista de amigos, a imagen del Xbox Live de Halo 2. Competitivas y casuales.</span></p></div>
+    <div class="panel card"><svg class="ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="6" rx="1"/><rect x="3" y="14" width="18" height="6" rx="1"/><path d="M7 7h.01M7 17h.01"/></svg><h3><span lang="en">Dedicated servers</span><span lang="es">Servidores dedicados</span></h3><p><span lang="en">Always-on servers in FIND GAMES. Players vote for the next map in the lobby.</span><span lang="es">Servidores siempre encendidos en BUSCAR PARTIDAS. Los jugadores votan el siguiente mapa en la sala.</span></p></div>
+    <div class="panel card"><svg class="ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2 20c0-3 3-5 6-5s6 2 6 5M12 20c0-3 2-5 4-5 3 0 6 2 6 5"/></svg><h3><span lang="en">24-player matches</span><span lang="es">Partidas de 24</span></h3><p><span lang="en">Eight more than Halo 2 allowed, with everyone's medals and stats in the results.</span><span lang="es">Ocho más de los que permitía Halo 2, con las medallas y estadísticas de todos en los resultados.</span></p></div>
+    <div class="panel card"><svg class="ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4.4 0-8 3.1-8 7.4 0 2.6 1.3 4.4 3 5.5V19h10v-3.1c1.7-1.1 3-2.9 3-5.5C20 6.1 16.4 3 12 3z"/><circle cx="9" cy="11" r="1.6"/><circle cx="15" cy="11" r="1.6"/><path d="M10 19v2M14 19v2"/></svg><h3><span lang="en">Co-op for 16, with skulls</span><span lang="es">Cooperativo para 16, con calaveras</span></h3><p><span lang="en">The whole campaign online with up to 16 players, and MCC's 34 Halo 2 skulls.</span><span lang="es">Toda la campaña en línea con hasta 16 jugadores, y las 34 calaveras de Halo 2 de MCC.</span></p></div>
+    <div class="panel card"><svg class="ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><h3><span lang="en">Voice and text chat</span><span lang="es">Chat de voz y de texto</span></h3><p><span lang="en">Push to talk to everyone or only your team, and a text chat in the lobby and the match.</span><span lang="es">Pulsa para hablar con todos o solo con tu equipo, y chat de texto en la sala y en la partida.</span></p></div>
+    <div class="panel card"><svg class="ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M4 19h16"/></svg><h3><span lang="en">Steam Workshop</span><span lang="es">Steam Workshop</span></h3><p><span lang="en">Halo 2 maps and campaign mods. Join a game on a mod you don't have and it downloads on its own.</span><span lang="es">Mapas y mods de campaña de Halo 2. Si entras a una partida con un mod que no tienes, se descarga solo.</span></p></div>
+  </div>
+  <div class="cta"><span class="btn-wrap"><a class="btn ghost" href="features.html"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span lang="en">All features</span><span lang="es">Todas las funciones</span></a></span></div>
+</div></section>
+
+<section class="reveal"><div class="wrap">
+  <div class="section-head"><p class="eyebrow"><span lang="en">Getting started</span><span lang="es">Cómo empezar</span></p><h2 class="h"><span lang="en">Three steps, no installer</span><span lang="es">Tres pasos, sin instalador</span></h2></div>
+  <ol class="steps row">
+    <li><span lang="en"><b>Download</b>Get the latest version from GitHub. It's a zip file.</span><span lang="es"><b>Descarga</b>Baja la última versión desde GitHub. Es un archivo zip.</span></li>
+    <li><span lang="en"><b>Unzip and open</b>Put it in any folder and run <code>h2gravemind.exe</code>. It finds MCC by itself.</span><span lang="es"><b>Descomprime y abre</b>Ponlo en cualquier carpeta y ejecuta <code>h2gravemind.exe</code>. Encuentra MCC por su cuenta.</span></li>
+    <li><span lang="en"><b>Play</b>Choose your name and look in CUSTOMIZE, then head to GRAVEMIND LIVE or FIND GAMES.</span><span lang="es"><b>Juega</b>Elige tu nombre y tu aspecto en PERSONALIZAR y entra en GRAVEMIND LIVE o BUSCAR PARTIDAS.</span></li>
+  </ol>
+</div></section>
+
+<section class="reveal"><div class="wrap">
+  <div class="section-head"><p class="eyebrow"><span lang="en">Screenshots</span><span lang="es">Capturas</span></p><h2 class="h"><span lang="en">A look inside</span><span lang="es">Un vistazo por dentro</span></h2></div>
+  <div class="shots">
+    <figure class="shot wide"><button type="button" aria-label="In game on Lockout / En partida en Encerrona"><img src="img/ingame.jpg" alt="In game on Lockout" loading="lazy" width="1600" height="900"></button><figcaption><span lang="en">In game · Lockout</span><span lang="es">En partida · Encerrona</span></figcaption></figure>
+    <figure class="shot wide"><button type="button" aria-label="Game lobby / Sala de la partida"><img src="img/lobby.jpg" alt="Game lobby" loading="lazy" width="1600" height="900"></button><figcaption><span lang="en">The lobby</span><span lang="es">La sala</span></figcaption></figure>
+    <figure class="shot"><button type="button" aria-label="Find games / Buscar partidas"><img src="img/browser.jpg" alt="Find games" loading="lazy" width="1600" height="900"></button><figcaption><span lang="en">Find games</span><span lang="es">Buscar partidas</span></figcaption></figure>
+    <figure class="shot"><button type="button" aria-label="Customize / Personalizar"><img src="img/customize.jpg" alt="Customize" loading="lazy" width="1600" height="900"></button><figcaption><span lang="en">Customize</span><span lang="es">Personalizar</span></figcaption></figure>
+    <figure class="shot"><button type="button" aria-label="Nameplates / Placas"><img src="img/nameplates.jpg" alt="Nameplates" loading="lazy" width="1600" height="900"></button><figcaption><span lang="en">Every MCC nameplate</span><span lang="es">Todas las placas de MCC</span></figcaption></figure>
+  </div>
+</div></section>
+
+<section class="reveal"><div class="wrap">
+  <div class="cta-band">
+    <div>
+      <h2 class="h"><span lang="en">It's an open beta, and it's free</span><span lang="es">Es una beta abierta, y es gratis</span></h2>
+      <p><span lang="en">Things will break now and then. When they do, tell us on Discord: player reports are how the beta gets better.</span><span lang="es">De vez en cuando algo fallará. Cuando pase, cuéntanoslo en Discord: los avisos de los jugadores son lo que hace mejorar la beta.</span></p>
+    </div>
+    <div class="actions"><span class="btn-wrap"><a class="btn" href="download.html"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M4 19h16"/></svg><span lang="en">Download</span><span lang="es">Descargar</span></a></span><span class="btn-wrap"><a class="btn ghost" href="https://discord.gg/7nAmnwnQqb" target="_blank" rel="noopener"><span lang="en">Discord</span><span lang="es">Discord</span></a></span></div>
+  </div>
+</div></section>
 
 </main>
 <footer>
-  <div class="wrap">
+  <div class="foot">
     <div>
-      <p><b style="color:#fff">PROJECT GRAVEMIND</b></p>
-      <p><span lang="en">A free fan project, inspired by Project Reclaimer. Not affiliated with or endorsed by Microsoft, Xbox Game Studios or Halo Studios. Halo and Halo 2 are trademarks of Microsoft. No game files are distributed.</span><span lang="es">Un proyecto gratuito de fans, inspirado en Project Reclaimer. Sin relación ni respaldo de Microsoft, Xbox Game Studios ni Halo Studios. Halo y Halo 2 son marcas de Microsoft. No se distribuyen archivos del juego.</span></p>
+      <a class="brand" href="index.html"><img src="img/logo.png" alt="" width="30" height="30"><span>PROJECT <b>GRAVEMIND</b></span></a>
+      <p><span lang="en">Halo 2 from your own copy of The Master Chief Collection, as a PC game of its own. A free fan project, inspired by Project Reclaimer and made by volunteers.</span><span lang="es">Halo 2 desde tu propia copia de The Master Chief Collection, como un juego de PC independiente. Un proyecto de fans gratuito, inspirado en Project Reclaimer y hecho por voluntarios.</span></p>
     </div>
-    <div class="legend">
-      <span><i class="a">A</i><a href="download.html"><span lang="en">DOWNLOAD</span><span lang="es">DESCARGAR</span></a></span>
-      <span><i class="b">B</i><a href="index.html"><span lang="en">HOME</span><span lang="es">INICIO</span></a></span>
+    <div>
+      <h4><span lang="en">Explore</span><span lang="es">Explora</span></h4>
+      <ul>
+        <li><a href="features.html"><span lang="en">Features</span><span lang="es">Funciones</span></a></li>
+        <li><a href="live.html">GRAVEMIND LIVE</a></li>
+        <li><a href="stats.html"><span lang="en">Stats</span><span lang="es">Estadísticas</span></a></li>
+        <li><a href="servers.html"><span lang="en">Servers</span><span lang="es">Servidores</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <h4><span lang="en">Help</span><span lang="es">Ayuda</span></h4>
+      <ul>
+        <li><a href="download.html"><span lang="en">Download</span><span lang="es">Descargar</span></a></li>
+        <li><a href="faq.html"><span lang="en">FAQ</span><span lang="es">Preguntas frecuentes</span></a></li>
+        <li><a href="https://discord.gg/7nAmnwnQqb" target="_blank" rel="noopener">Discord</a></li>
+        <li><a href="privacy.html"><span lang="en">Privacy &amp; legal</span><span lang="es">Privacidad y aviso legal</span></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="legal-line">
+    <p><span lang="en">Project Gravemind is not affiliated with or endorsed by Microsoft, Xbox Game Studios or Halo Studios. Halo and Halo 2 are trademarks of Microsoft; Steam is a trademark of Valve. The download contains no game files: it runs the copy of Halo 2 you own.</span><span lang="es">Project Gravemind no tiene relación con Microsoft, Xbox Game Studios ni Halo Studios, ni cuenta con su respaldo. Halo y Halo 2 son marcas de Microsoft; Steam es una marca de Valve. La descarga no contiene archivos del juego: ejecuta la copia de Halo 2 que tienes.</span></p>
+    <div class="legend" aria-hidden="true">
+      <span><i class="a">A</i><a href="download.html" tabindex="-1"><span lang="en">DOWNLOAD</span><span lang="es">DESCARGAR</span></a></span>
+      <span><i class="b">B</i><a href="index.html" tabindex="-1"><span lang="en">HOME</span><span lang="es">INICIO</span></a></span>
     </div>
   </div>
 </footer>
-<div class="viewer" id="viewer"><img alt=""></div>
+<div class="viewer" id="viewer" tabindex="-1" role="dialog" aria-modal="true" aria-label="Screenshot"><img alt=""></div>
 <script src="main.js"></script>
 </body>
 </html>

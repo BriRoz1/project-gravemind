@@ -4,39 +4,50 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Stats · Project Gravemind</title>
-<meta name="description" content="Halo 2 from The Master Chief Collection as a standalone PC game: GRAVEMIND LIVE matchmaking with Halo 2's ranks, dedicated servers, 24 players, online co-op, voice chat and mods. Open beta, free.">
-<meta property="og:title" content="Project Gravemind · Open beta">
-<meta property="og:description" content="Halo 2 from MCC as a standalone PC game: matchmaking with Halo 2's ranks, dedicated servers, 24 players, online co-op.">
-<meta property="og:image" content="img/ingame.jpg">
+<meta name="description" content="Live statistics from GRAVEMIND LIVE: players online, matches in progress, levels, kills and medals.">
+<meta name="theme-color" content="#030814">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Project Gravemind">
+<meta property="og:title" content="Stats · Project Gravemind">
+<meta property="og:description" content="Live statistics from GRAVEMIND LIVE: players online, matches in progress, levels, kills and medals.">
+<meta property="og:image" content="https://projectgravemind.com/img/ingame.jpg">
+<meta property="og:url" content="https://projectgravemind.com/stats.html">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://projectgravemind.com/stats.html">
+<link rel="icon" href="img/logo.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600&family=Michroma&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
-<div class="backdrop" aria-hidden="true"></div>
+<body class="stats">
+<a class="skip" href="#main"><span lang="en">Skip to content</span><span lang="es">Saltar al contenido</span></a>
+<div class="bg" aria-hidden="true"><video muted loop playsinline autoplay preload="none" poster="media/hero-poster.jpg" tabindex="-1"></video></div>
+<div class="bg-lines" aria-hidden="true"></div>
 <header class="topbar">
-  <a class="brand" href="index.html">PROJECT <b>GRAVEMIND</b></a>
-  <div class="live-badge"><span class="dot"></span>OPEN BETA · NOW LIVE</div>
-  <nav class="nav">
-    <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
-    <a href="features.html"><span lang="en">Features</span><span lang="es">Funciones</span></a>
-    <a href="live.html">GRAVEMIND LIVE</a>
-    <a href="stats.html" class="on"><span lang="en">Stats</span><span lang="es">Estadísticas</span></a>
-    <a href="servers.html"><span lang="en">Servers</span><span lang="es">Servidores</span></a>
-    <a href="download.html"><span lang="en">Download</span><span lang="es">Descargar</span></a>
-    <a href="faq.html">FAQ</a>
-  </nav>
-  <div class="lang" role="group" aria-label="Language">
-    <button type="button" data-set-lang="en">EN</button>
-    <button type="button" data-set-lang="es">ES</button>
+  <div class="topbar-in">
+    <a class="brand" href="index.html"><img src="img/logo.png" alt="" width="30" height="30"><span><span class="long">PROJECT </span><b>GRAVEMIND</b></span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
+      <a href="features.html"><span lang="en">Features</span><span lang="es">Funciones</span></a>
+      <a href="live.html">GRAVEMIND LIVE</a>
+      <a href="stats.html" class="on" aria-current="page"><span lang="en">Stats</span><span lang="es">Estadísticas</span></a>
+      <a href="servers.html"><span lang="en">Servers</span><span lang="es">Servidores</span></a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+    <div class="top-actions">
+      <div class="lang" role="group" aria-label="Language / Idioma">
+        <button type="button" data-set-lang="en" aria-label="English">EN</button>
+        <button type="button" data-set-lang="es" aria-label="Español">ES</button>
+      </div>
+      <a class="btn-sm" href="download.html"><span lang="en">Download</span><span lang="es">Descargar</span></a>
+    </div>
   </div>
 </header>
-<main>
+<main id="main">
 
 <section class="page-hero"><div class="wrap">
-  <div class="band"><h2><span lang="en">Stats</span><span lang="es">Estadísticas</span></h2></div>
-  <p class="lead"><span lang="en">What GRAVEMIND LIVE sees: who is online, the matches being played, everyone's level in each playlist, kills, deaths and medals from the matchmaking matches.</span><span lang="es">Lo que ve GRAVEMIND LIVE: quién está en línea, las partidas en curso, el nivel de cada jugador en cada lista, bajas, muertes y medallas de las partidas de matchmaking.</span></p>
+  <div class="section-head"><p class="eyebrow"><span lang="en">GRAVEMIND LIVE</span><span lang="es">GRAVEMIND LIVE</span></p><h1 class="h"><span lang="en">Stats</span><span lang="es">Estadísticas</span></h1><p class="lead"><span lang="en">Who's online, the matches being played right now, and every player's level, kills, deaths and medals from matchmaking.</span><span lang="es">Quién está en línea, las partidas que se juegan ahora mismo y el nivel, las bajas, las muertes y las medallas de cada jugador en matchmaking.</span></p></div>
   <p class="updated" id="updated"><span lang="en">Loading...</span><span lang="es">Cargando...</span></p>
 </div></section>
 <section class="reveal stats"><div class="wrap">
@@ -49,29 +60,50 @@
   <div class="tabs" id="top-tabs"></div>
   <div class="table-wrap"><table class="tbl" id="top"></table></div>
   <div class="label"><span lang="en">Players</span><span lang="es">Jugadores</span></div>
-  <div class="filter"><input type="search" id="find" placeholder="Gamertag" autocomplete="off"><span id="found"></span></div>
+  <div class="filter"><input type="search" id="find" placeholder="Gamertag" autocomplete="off" aria-label="Gamertag"><span id="found"></span></div>
   <div class="table-wrap"><table class="tbl" id="players"></table></div>
   <div class="more"><button type="button" class="btn ghost" id="more"><span lang="en">More</span><span lang="es">Más</span></button></div>
   <div class="modal" id="card" hidden><div class="panel player-card"><button type="button" class="close" id="card-close" aria-label="Close">&times;</button><div id="card-body"></div></div></div>
   <div class="label"><span lang="en">Recent matches</span><span lang="es">Últimas partidas</span></div>
   <div id="recent"></div>
-  <p class="note small"><span lang="en">Only matchmaking matches count (not custom games or dedicated servers). Levels follow Halo 2's rules: wins and losses only. The page refreshes by itself every two minutes; the data is a few minutes old.</span><span lang="es">Solo cuentan las partidas de matchmaking (no las personalizadas ni los servidores dedicados). Los niveles siguen las reglas de Halo 2: solo victorias y derrotas. La página se actualiza sola cada dos minutos; los datos tienen unos minutos.</span></p>
+  <p class="note info small"><span lang="en">Only matchmaking matches count, not custom games or dedicated servers. Levels follow Halo 2's rules: wins and losses only. The page refreshes itself every two minutes, and the data is a few minutes behind.</span><span lang="es">Solo cuentan las partidas de matchmaking, no las personalizadas ni las de servidores dedicados. Los niveles siguen las reglas de Halo 2: solo victorias y derrotas. La página se actualiza sola cada dos minutos y los datos llevan unos minutos de retraso.</span></p>
 </div></section>
 
 </main>
 <footer>
-  <div class="wrap">
+  <div class="foot">
     <div>
-      <p><b style="color:#fff">PROJECT GRAVEMIND</b></p>
-      <p><span lang="en">A free fan project, inspired by Project Reclaimer. Not affiliated with or endorsed by Microsoft, Xbox Game Studios or Halo Studios. Halo and Halo 2 are trademarks of Microsoft. No game files are distributed.</span><span lang="es">Un proyecto gratuito de fans, inspirado en Project Reclaimer. Sin relación ni respaldo de Microsoft, Xbox Game Studios ni Halo Studios. Halo y Halo 2 son marcas de Microsoft. No se distribuyen archivos del juego.</span></p>
+      <a class="brand" href="index.html"><img src="img/logo.png" alt="" width="30" height="30"><span>PROJECT <b>GRAVEMIND</b></span></a>
+      <p><span lang="en">Halo 2 from your own copy of The Master Chief Collection, as a PC game of its own. A free fan project, inspired by Project Reclaimer and made by volunteers.</span><span lang="es">Halo 2 desde tu propia copia de The Master Chief Collection, como un juego de PC independiente. Un proyecto de fans gratuito, inspirado en Project Reclaimer y hecho por voluntarios.</span></p>
     </div>
-    <div class="legend">
-      <span><i class="a">A</i><a href="download.html"><span lang="en">DOWNLOAD</span><span lang="es">DESCARGAR</span></a></span>
-      <span><i class="b">B</i><a href="index.html"><span lang="en">HOME</span><span lang="es">INICIO</span></a></span>
+    <div>
+      <h4><span lang="en">Explore</span><span lang="es">Explora</span></h4>
+      <ul>
+        <li><a href="features.html"><span lang="en">Features</span><span lang="es">Funciones</span></a></li>
+        <li><a href="live.html">GRAVEMIND LIVE</a></li>
+        <li><a href="stats.html"><span lang="en">Stats</span><span lang="es">Estadísticas</span></a></li>
+        <li><a href="servers.html"><span lang="en">Servers</span><span lang="es">Servidores</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <h4><span lang="en">Help</span><span lang="es">Ayuda</span></h4>
+      <ul>
+        <li><a href="download.html"><span lang="en">Download</span><span lang="es">Descargar</span></a></li>
+        <li><a href="faq.html"><span lang="en">FAQ</span><span lang="es">Preguntas frecuentes</span></a></li>
+        <li><a href="https://discord.gg/7nAmnwnQqb" target="_blank" rel="noopener">Discord</a></li>
+        <li><a href="privacy.html"><span lang="en">Privacy &amp; legal</span><span lang="es">Privacidad y aviso legal</span></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="legal-line">
+    <p><span lang="en">Project Gravemind is not affiliated with or endorsed by Microsoft, Xbox Game Studios or Halo Studios. Halo and Halo 2 are trademarks of Microsoft; Steam is a trademark of Valve. The download contains no game files: it runs the copy of Halo 2 you own.</span><span lang="es">Project Gravemind no tiene relación con Microsoft, Xbox Game Studios ni Halo Studios, ni cuenta con su respaldo. Halo y Halo 2 son marcas de Microsoft; Steam es una marca de Valve. La descarga no contiene archivos del juego: ejecuta la copia de Halo 2 que tienes.</span></p>
+    <div class="legend" aria-hidden="true">
+      <span><i class="a">A</i><a href="download.html" tabindex="-1"><span lang="en">DOWNLOAD</span><span lang="es">DESCARGAR</span></a></span>
+      <span><i class="b">B</i><a href="index.html" tabindex="-1"><span lang="en">HOME</span><span lang="es">INICIO</span></a></span>
     </div>
   </div>
 </footer>
-<div class="viewer" id="viewer"><img alt=""></div>
+<div class="viewer" id="viewer" tabindex="-1" role="dialog" aria-modal="true" aria-label="Screenshot"><img alt=""></div>
 <script src="main.js"></script>
 <script src="stats.js"></script>
 </body>

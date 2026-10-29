@@ -4,75 +4,126 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GRAVEMIND LIVE · Project Gravemind</title>
-<meta name="description" content="Halo 2 from The Master Chief Collection as a standalone PC game: GRAVEMIND LIVE matchmaking with Halo 2's ranks, dedicated servers, 24 players, online co-op, voice chat and mods. Open beta, free.">
-<meta property="og:title" content="Project Gravemind · Open beta">
-<meta property="og:description" content="Halo 2 from MCC as a standalone PC game: matchmaking with Halo 2's ranks, dedicated servers, 24 players, online co-op.">
-<meta property="og:image" content="img/ingame.jpg">
+<meta name="description" content="GRAVEMIND LIVE brings back Halo 2's online play: matchmaking playlists, parties, friends and the 1 to 50 ranks.">
+<meta name="theme-color" content="#030814">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Project Gravemind">
+<meta property="og:title" content="GRAVEMIND LIVE · Project Gravemind">
+<meta property="og:description" content="GRAVEMIND LIVE brings back Halo 2's online play: matchmaking playlists, parties, friends and the 1 to 50 ranks.">
+<meta property="og:image" content="https://projectgravemind.com/img/ingame.jpg">
+<meta property="og:url" content="https://projectgravemind.com/live.html">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://projectgravemind.com/live.html">
+<link rel="icon" href="img/logo.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600&family=Michroma&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
-<div class="backdrop" aria-hidden="true"></div>
+<body class="live">
+<a class="skip" href="#main"><span lang="en">Skip to content</span><span lang="es">Saltar al contenido</span></a>
+<div class="bg" aria-hidden="true"><video muted loop playsinline autoplay preload="none" poster="media/hero-poster.jpg" tabindex="-1"></video></div>
+<div class="bg-lines" aria-hidden="true"></div>
 <header class="topbar">
-  <a class="brand" href="index.html">PROJECT <b>GRAVEMIND</b></a>
-  <div class="live-badge"><span class="dot"></span>OPEN BETA · NOW LIVE</div>
-  <nav class="nav">
-    <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
-    <a href="features.html"><span lang="en">Features</span><span lang="es">Funciones</span></a>
-    <a href="live.html" class="on">GRAVEMIND LIVE</a>
-    <a href="stats.html"><span lang="en">Stats</span><span lang="es">Estadísticas</span></a>
-    <a href="servers.html"><span lang="en">Servers</span><span lang="es">Servidores</span></a>
-    <a href="download.html"><span lang="en">Download</span><span lang="es">Descargar</span></a>
-    <a href="faq.html">FAQ</a>
-  </nav>
-  <div class="lang" role="group" aria-label="Language">
-    <button type="button" data-set-lang="en">EN</button>
-    <button type="button" data-set-lang="es">ES</button>
+  <div class="topbar-in">
+    <a class="brand" href="index.html"><img src="img/logo.png" alt="" width="30" height="30"><span><span class="long">PROJECT </span><b>GRAVEMIND</b></span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
+      <a href="features.html"><span lang="en">Features</span><span lang="es">Funciones</span></a>
+      <a href="live.html" class="on" aria-current="page">GRAVEMIND LIVE</a>
+      <a href="stats.html"><span lang="en">Stats</span><span lang="es">Estadísticas</span></a>
+      <a href="servers.html"><span lang="en">Servers</span><span lang="es">Servidores</span></a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+    <div class="top-actions">
+      <div class="lang" role="group" aria-label="Language / Idioma">
+        <button type="button" data-set-lang="en" aria-label="English">EN</button>
+        <button type="button" data-set-lang="es" aria-label="Español">ES</button>
+      </div>
+      <a class="btn-sm" href="download.html"><span lang="en">Download</span><span lang="es">Descargar</span></a>
+    </div>
   </div>
 </header>
-<main>
+<main id="main">
 
 <section class="page-hero"><div class="wrap">
-  <div class="live-badge"><span class="dot"></span>OPEN BETA · NOW LIVE</div>
-  <div class="band"><h2><span lang="en">GRAVEMIND LIVE</span><span lang="es">GRAVEMIND LIVE</span></h2></div>
-  <p class="lead"><span lang="en">Halo 2's Xbox Live matchmaking, back.</span><span lang="es">El matchmaking de Halo 2 en Xbox Live, de vuelta.</span></p>
+  <div class="section-head"><p class="eyebrow"><span lang="en">Online service</span><span lang="es">Servicio en línea</span></p><h1 class="h"><span lang="en">GRAVEMIND LIVE</span><span lang="es">GRAVEMIND LIVE</span></h1><p class="lead"><span lang="en">Halo 2's matchmaking, the way it worked on Xbox Live: pick a playlist, bring your party, climb from 1 to 50. Run by the project, free for everyone.</span><span lang="es">El matchmaking de Halo 2 como funcionaba en Xbox Live: eliges una lista, traes a tu grupo y subes del 1 al 50. Lo gestiona el proyecto y es gratis para todos.</span></p></div>
 </div></section>
+
 <section class="reveal"><div class="wrap">
   <div class="grid three">
-    <div class="panel"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M5.6 5.6a9 9 0 0 0 0 12.8M18.4 5.6a9 9 0 0 1 0 12.8M8.5 8.5a5 5 0 0 0 0 7M15.5 8.5a5 5 0 0 1 0 7"/></svg><h3><span lang="en">Matchmaking</span><span lang="es">Matchmaking</span></h3><p><span lang="en">Quickmatch or Optimatch in the original playlists, ranked and social.</span><span lang="es">Partida rápida u Optimatch en las listas originales, con rango y sociales.</span></p></div>
-    <div class="panel"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2 20c0-3 3-5 6-5s6 2 6 5M12 20c0-3 2-5 4-5 3 0 6 2 6 5"/></svg><h3><span lang="en">Party</span><span lang="es">Grupo</span></h3><p><span lang="en">Search with your friends; you play on the same team.</span><span lang="es">Busca con tus amigos; jugáis en el mismo equipo.</span></p></div>
-    <div class="panel"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg><h3><span lang="en">Friends</span><span lang="es">Amigos</span></h3><p><span lang="en">Friends list, recent players and invites.</span><span lang="es">Lista de amigos, jugadores recientes e invitaciones.</span></p></div>
+    <div class="panel card"><svg class="ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M5.6 5.6a9 9 0 0 0 0 12.8M18.4 5.6a9 9 0 0 1 0 12.8M8.5 8.5a5 5 0 0 0 0 7M15.5 8.5a5 5 0 0 1 0 7"/></svg><h3><span lang="en">Matchmaking</span><span lang="es">Matchmaking</span></h3><p><span lang="en">QUICKMATCH drops you into a game; OPTIMATCH lets you set what you're looking for. Playlists are split into CASUAL and RANKED.</span><span lang="es">PARTIDA RÁPIDA te mete en una partida; OPTIMATCH te deja elegir qué buscas. Las listas se dividen en CASUAL y COMPETITIVO.</span></p></div>
+    <div class="panel card"><svg class="ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2 20c0-3 3-5 6-5s6 2 6 5M12 20c0-3 2-5 4-5 3 0 6 2 6 5"/></svg><h3><span lang="en">Party</span><span lang="es">Grupo</span></h3><p><span lang="en">Invite your friends and search together. You're always placed on the same team.</span><span lang="es">Invita a tus amigos y buscad juntos. Siempre os toca el mismo equipo.</span></p></div>
+    <div class="panel card"><svg class="ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg><h3><span lang="en">Friends</span><span lang="es">Amigos</span></h3><p><span lang="en">A friends list, recent players and invites, and you can see what your friends are playing.</span><span lang="es">Lista de amigos, jugadores recientes e invitaciones, y puedes ver a qué juegan tus amigos.</span></p></div>
   </div>
-  <div class="label"><span lang="en">Ranks</span><span lang="es">Rangos</span></div>
-  <p><span lang="en">Level 1 to 50 in each playlist. Only wins and losses count, not kills. Beating someone higher gets you more, the first levels go fast, and from 42 up each win is worth less. Quitting a match is a loss.</span><span lang="es">Nivel 1 a 50 en cada lista. Solo cuentan las victorias y derrotas, no las bajas. Ganarle a alguien de más nivel da más, los primeros niveles suben rápido y desde el 42 cada victoria vale menos. Salirse de una partida cuenta como derrota.</span></p>
-  <table class="ranks">
-    <thead><tr><th><span lang="en">Wins in a row against your level</span><span lang="es">Victorias seguidas contra tu nivel</span></th><th><span lang="en">Level</span><span lang="es">Nivel</span></th></tr></thead>
-    <tbody><tr><td>9</td><td>10</td></tr><tr><td>28</td><td>20</td></tr><tr><td>53</td><td>30</td></tr><tr><td>78</td><td>40</td></tr><tr><td>110</td><td>50</td></tr></tbody>
-  </table>
-  <p><span lang="en">You get matched with players of your level and the teams are split evenly.</span><span lang="es">Te empareja con jugadores de tu nivel y reparte los equipos parejos.</span></p>
-  <div class="label"><span lang="en">Your account</span><span lang="es">Tu cuenta</span></div>
-  <p><span lang="en">It's saved on your PC. Back it up in SETTINGS > NETWORK > ACCOUNT > EXPORT so you don't lose it if you reinstall.</span><span lang="es">Se guarda en tu PC. Haz una copia en AJUSTES > CONEXIÓN > CUENTA > EXPORTAR para no perderla si reinstalas.</span></p>
-  <div class="label"><span lang="en">Stats</span><span lang="es">Estadísticas</span></div>
-  <p><span lang="en">Who is online, the matches being played, every player's level per playlist, kills, deaths and medals: <a href="stats.html">Stats</a>.</span><span lang="es">Quién está en línea, las partidas en curso, el nivel de cada jugador por lista, bajas, muertes y medallas: <a href="stats.html">Estadísticas</a>.</span></p>
-  <div class="cta"><span class="btn-wrap"><a class="btn" href="download.html"><span lang="en">Download</span><span lang="es">Descargar</span></a></span><span class="btn-wrap"><a class="btn ghost" href="stats.html"><span lang="en">Stats</span><span lang="es">Estadísticas</span></a></span></div>
+</div></section>
+
+<section class="reveal"><div class="wrap split">
+  <div>
+    <div class="section-head"><p class="eyebrow"><span lang="en">Ranks</span><span lang="es">Rangos</span></p><h2 class="h"><span lang="en">Levels earned the Halo 2 way</span><span lang="es">Niveles al estilo de Halo 2</span></h2></div>
+    <p><span lang="en">Each ranked playlist has its own level from 1 to 50. Only wins and losses count, never kills. Beating players above your level moves you further, the first levels come quickly, and from level 42 each win is worth less. Quitting a match counts as a loss.</span><span lang="es">Cada lista competitiva tiene su propio nivel del 1 al 50. Solo cuentan las victorias y las derrotas, nunca las bajas. Ganar a jugadores de más nivel te hace avanzar más, los primeros niveles llegan rápido y a partir del 42 cada victoria vale menos. Abandonar una partida cuenta como derrota.</span></p>
+    <p><span lang="en">Matchmaking pairs you with players near your level and splits the teams evenly. After a ranked match, a screen shows what it did to your level before the results.</span><span lang="es">El matchmaking te junta con jugadores de un nivel parecido y reparte los equipos de forma equilibrada. Tras una partida competitiva, antes de los resultados, una pantalla muestra cómo ha cambiado tu nivel.</span></p>
+  </div>
+  <div class="panel">
+    <h3><span lang="en">Wins in a row at your level</span><span lang="es">Victorias seguidas a tu nivel</span></h3>
+    <table class="ranks">
+      <thead><tr><th><span lang="en">Wins</span><span lang="es">Victorias</span></th><th><span lang="en">Level reached</span><span lang="es">Nivel alcanzado</span></th></tr></thead>
+      <tbody><tr><td>9</td><td>10</td></tr><tr><td>28</td><td>20</td></tr><tr><td>53</td><td>30</td></tr><tr><td>78</td><td>40</td></tr><tr><td>110</td><td>50</td></tr></tbody>
+    </table>
+    <p><span lang="en">Approximate, against players of your own level.</span><span lang="es">Aproximado, contra jugadores de tu mismo nivel.</span></p>
+  </div>
+</div></section>
+
+<section class="reveal"><div class="wrap grid two">
+  <div class="panel">
+    <h3><span lang="en">Your account</span><span lang="es">Tu cuenta</span></h3>
+    <p><span lang="en">Your GRAVEMIND LIVE account is kept on your PC, not behind a password. Save a copy in SETTINGS &gt; NETWORK &gt; ACCOUNT &gt; EXPORT so you can bring it back after reinstalling or on another PC. Keep that file private: whoever has it plays as you.</span><span lang="es">Tu cuenta de GRAVEMIND LIVE se guarda en tu PC, no tras una contraseña. Haz una copia en AJUSTES &gt; CONEXIÓN &gt; CUENTA &gt; EXPORTAR para recuperarla si reinstalas o cambias de PC. Guarda ese archivo en privado: quien lo tenga juega como tú.</span></p>
+  </div>
+  <div class="panel">
+    <h3><span lang="en">Public stats</span><span lang="es">Estadísticas públicas</span></h3>
+    <p><span lang="en">Who's online, the matches being played, every player's level in each playlist, kills, deaths and medals. All of it is on the <a href="stats.html">Stats</a> page.</span><span lang="es">Quién está en línea, las partidas en curso, el nivel de cada jugador en cada lista, bajas, muertes y medallas. Todo está en la página de <a href="stats.html">Estadísticas</a>.</span></p>
+  </div>
+</div></section>
+
+<section class="tight reveal"><div class="wrap">
+  <div class="cta" style="margin-top:0"><span class="btn-wrap"><a class="btn" href="download.html"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M4 19h16"/></svg><span lang="en">Download</span><span lang="es">Descargar</span></a></span><span class="btn-wrap"><a class="btn ghost" href="stats.html"><span lang="en">See the stats</span><span lang="es">Ver estadísticas</span></a></span></div>
 </div></section>
 
 </main>
 <footer>
-  <div class="wrap">
+  <div class="foot">
     <div>
-      <p><b style="color:#fff">PROJECT GRAVEMIND</b></p>
-      <p><span lang="en">A free fan project, inspired by Project Reclaimer. Not affiliated with or endorsed by Microsoft, Xbox Game Studios or Halo Studios. Halo and Halo 2 are trademarks of Microsoft. No game files are distributed.</span><span lang="es">Un proyecto gratuito de fans, inspirado en Project Reclaimer. Sin relación ni respaldo de Microsoft, Xbox Game Studios ni Halo Studios. Halo y Halo 2 son marcas de Microsoft. No se distribuyen archivos del juego.</span></p>
+      <a class="brand" href="index.html"><img src="img/logo.png" alt="" width="30" height="30"><span>PROJECT <b>GRAVEMIND</b></span></a>
+      <p><span lang="en">Halo 2 from your own copy of The Master Chief Collection, as a PC game of its own. A free fan project, inspired by Project Reclaimer and made by volunteers.</span><span lang="es">Halo 2 desde tu propia copia de The Master Chief Collection, como un juego de PC independiente. Un proyecto de fans gratuito, inspirado en Project Reclaimer y hecho por voluntarios.</span></p>
     </div>
-    <div class="legend">
-      <span><i class="a">A</i><a href="download.html"><span lang="en">DOWNLOAD</span><span lang="es">DESCARGAR</span></a></span>
-      <span><i class="b">B</i><a href="index.html"><span lang="en">HOME</span><span lang="es">INICIO</span></a></span>
+    <div>
+      <h4><span lang="en">Explore</span><span lang="es">Explora</span></h4>
+      <ul>
+        <li><a href="features.html"><span lang="en">Features</span><span lang="es">Funciones</span></a></li>
+        <li><a href="live.html">GRAVEMIND LIVE</a></li>
+        <li><a href="stats.html"><span lang="en">Stats</span><span lang="es">Estadísticas</span></a></li>
+        <li><a href="servers.html"><span lang="en">Servers</span><span lang="es">Servidores</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <h4><span lang="en">Help</span><span lang="es">Ayuda</span></h4>
+      <ul>
+        <li><a href="download.html"><span lang="en">Download</span><span lang="es">Descargar</span></a></li>
+        <li><a href="faq.html"><span lang="en">FAQ</span><span lang="es">Preguntas frecuentes</span></a></li>
+        <li><a href="https://discord.gg/7nAmnwnQqb" target="_blank" rel="noopener">Discord</a></li>
+        <li><a href="privacy.html"><span lang="en">Privacy &amp; legal</span><span lang="es">Privacidad y aviso legal</span></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="legal-line">
+    <p><span lang="en">Project Gravemind is not affiliated with or endorsed by Microsoft, Xbox Game Studios or Halo Studios. Halo and Halo 2 are trademarks of Microsoft; Steam is a trademark of Valve. The download contains no game files: it runs the copy of Halo 2 you own.</span><span lang="es">Project Gravemind no tiene relación con Microsoft, Xbox Game Studios ni Halo Studios, ni cuenta con su respaldo. Halo y Halo 2 son marcas de Microsoft; Steam es una marca de Valve. La descarga no contiene archivos del juego: ejecuta la copia de Halo 2 que tienes.</span></p>
+    <div class="legend" aria-hidden="true">
+      <span><i class="a">A</i><a href="download.html" tabindex="-1"><span lang="en">DOWNLOAD</span><span lang="es">DESCARGAR</span></a></span>
+      <span><i class="b">B</i><a href="index.html" tabindex="-1"><span lang="en">HOME</span><span lang="es">INICIO</span></a></span>
     </div>
   </div>
 </footer>
-<div class="viewer" id="viewer"><img alt=""></div>
+<div class="viewer" id="viewer" tabindex="-1" role="dialog" aria-modal="true" aria-label="Screenshot"><img alt=""></div>
 <script src="main.js"></script>
 </body>
 </html>
