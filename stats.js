@@ -9,6 +9,7 @@
   const STALE = 15 * 60;   // s without a new file: the server is not reporting
   const PAGE = 50;         // players shown at a time
   const TOP = 25;
+  const RECENT_PAGE = 9;  // recent matches per page
 
   // Halo 2's medals by their game results index (medals.cpp), the ones MCC shows
   const MEDALS = {
@@ -171,7 +172,7 @@
     return m < 60 ? m + " min" : Math.floor(m / 60) + " h " + (m % 60) + " min";
   }
 
-  let data = null, playlists = {}, players = [], byName = {}, shown = PAGE, sortKey = "level", sortDown = true, filter = "", topTab = "", topSort = "level";
+  let data = null, playlists = {}, players = [], byName = {}, shown = PAGE, sortKey = "level", sortDown = true, filter = "", topTab = "", topSort = "level", recentPage = 0, recentOpen = "";
   const KD_GAMES = 5;  // games needed in a leaderboard sorted by K/D
 
   // every account with its totals over the playlists (ranks only where played)
@@ -222,7 +223,8 @@
   // the best of the last 7 / 30 days: stats.json's "week" / "month" (Live keeps every account's days), or, from an
   // older Live, the same counted from the recent matches it lists
   function period(d, key, days) {
-    if (d[key] && Array.isArray(d[key].top)) return d[key].top;
+    // (a Live that only started counting: its list is still empty, the recent matches stand in)
+    if (d[key] && Array.isArray(d[key].top) && d[key].top.length) return d[key].top;
     const since = now() - days * 86400, sum = {};
     (d.recent || []).filter((m) => m.ended >= since).forEach((m) => {
       const res = result(m);
@@ -427,34 +429,75 @@
     return { winner: tie ? null : rows[0].name, tie: tie };
   }
 
+  // the last matches as cards, RECENT_PAGE per page: playlist, map, when, how long, the outcome and the players
+  // (the winners first); a card's button opens its full carnage report
   function recent(d) {
     const list = d.recent || [];
     if (!list.length) {
       $("recent").innerHTML = '<p class="empty">' + t("No match played yet.", "Ninguna partida jugada todavía.") + "</p>";
+      $("recent-pager").innerHTML = "";
       return;
     }
-    $("recent").innerHTML = list.map((m) => {
+    const pages = Math.max(1, Math.ceil(list.length / RECENT_PAGE));
+    recentPage = Math.min(Math.max(recentPage, 0), pages - 1);
+    const slice = list.slice(recentPage * RECENT_PAGE, (recentPage + 1) * RECENT_PAGE);
+    $("recent").innerHTML = slice.map((match) => {
+      let m = match;
+      // (one against one: the winner by name, not a "team")
+      const duel = m.teams && m.rows.length <= 2;
+      if (duel) m = Object.assign({}, m, { teams: false });
       const res = result(m), pl = playlists[m.playlist] || {};
-      let outcome;
+      const key = String(m.started) + "/" + String(m.title);
+      let score;
       if (m.teams) {
-        outcome = '<span class="red' + (res.winner === 0 ? " won" : "") + '">' + t("Red", "Rojo") + " " + n(res.score[0] || 0) + "</span> – " +
-          '<span class="blue' + (res.winner === 1 ? " won" : "") + '">' + t("Blue", "Azul") + " " + n(res.score[1] || 0) + "</span>";
+        score = '<div class="rscore"><span class="red' + (res.winner === 0 ? " won" : "") + '">' + n(res.score[0] || 0) + "</span><i>–</i>" +
+          '<span class="blue' + (res.winner === 1 ? " won" : "") + '">' + n(res.score[1] || 0) + "</span></div>" +
+          '<div class="rwinner">' + (res.tie ? t("Tie", "Empate") : res.winner === 0 ? t("Red team wins", "Gana el equipo rojo") : t("Blue team wins", "Gana el equipo azul")) + "</div>";
       } else {
-        outcome = res.tie ? t("Tie", "Empate") : '<span class="won">' + nm(res.winner) + "</span>";
+        score = '<div class="rwinner solo">' + (res.tie ? t("Tie", "Empate") : '<span class="crown">★</span> ' + nm(res.winner)) + "</div>";
       }
+      const order = m.rows.slice().sort((a, b) => (a.left - b.left) ||
+        (m.teams && a.team !== b.team ? (a.team === res.winner ? -1 : b.team === res.winner ? 1 : a.team - b.team) : 0) || b.score - a.score);
+      const chips = order.slice(0, 8).map((r) => '<li class="' + (m.teams ? (r.team ? "t-blue" : "t-red") : "") + (r.left ? " left" : "") + '" data-player="' + esc(r.name) + '">' +
+        lvl(r.level) + emb(byName[r.name] || {}) + '<span class="pname">' + nm(r.name) + "</span><b>" + n(r.score) + "</b></li>").join("") +
+        (order.length > 8 ? '<li class="more-players">+' + (order.length - 8) + "</li>" : "");
       const rows = m.rows.slice().sort((a, b) => (m.teams && a.team !== b.team ? a.team - b.team : b.score - a.score)).map((r) =>
         '<tr class="' + (m.teams ? (r.team ? "t-blue" : "t-red") : "") + (r.left ? " left" : "") + '"><td data-player="' + esc(r.name) + '">' + lvl(r.level) + emb(byName[r.name] || {}) + nm(r.name) +
         (r.left ? ' <small>' + t("left", "se fue") + "</small>" : "") + "</td><td>" + n(r.score) + "</td><td>" + (m.stats ? n(r.kills) : "–") + "</td><td>" +
         (m.stats ? n(r.deaths) : "–") + "</td><td>" + (m.stats ? n(r.assists) : "–") + "</td><td>" + (m.stats ? n(r.medals) : "–") + "</td><td>" +
         (r.xp ? (r.xp > 0 ? "+" : "") + r.xp : "–") + "</td></tr>").join("");
-      return "<details><summary><span class=\"when\">" + ago(m.ended) + '</span><span class="what">' + esc(pl.name || m.playlist) + " · " + esc(m.title) +
-        '</span><span class="outcome">' + outcome + "</span></summary>" +
-        '<div class="table-wrap"><table class="tbl"><thead><tr><th>' + t("Player", "Jugador") + "</th><th>" + t("Score", "Puntos") + "</th><th>" + t("Kills", "Bajas") +
-        "</th><th>" + t("Deaths", "Muertes") + "</th><th>" + t("Assists", "Asist.") + "</th><th>" + t("Medals", "Medallas") + "</th><th>" + t("Experience", "Experiencia") +
-        "</th></tr></thead><tbody>" + rows + "</tbody></table></div>" +
-        '<p class="sub">' + when(m.started) + (m.ended > m.started ? " · " + minutes(m.ended - m.started) : "") + "</p></details>";
+      const open = recentOpen === key;
+      return '<article class="panel rcard' + (m.teams ? " teams" : "") + (open ? " open" : "") + '" data-key="' + esc(key) + '">' +
+        '<div class="rhead"><span class="rpl">' + esc(pl.name || m.playlist) + '</span><span class="rwhen">' + ago(m.ended) + "</span></div>" +
+        '<h3 class="rtitle">' + esc(m.title) + "</h3>" + score +
+        '<ul class="rplayers">' + chips + "</ul>" +
+        '<div class="rfoot"><span>' + when(m.started) + (m.ended > m.started ? " · " + minutes(m.ended - m.started) : "") + " · " + m.rows.length + " " +
+        t("players", "jugadores") + '</span><button type="button" class="rtoggle">' + (open ? t("Hide report", "Ocultar informe") : t("Carnage report", "Informe de bajas")) + "</button></div>" +
+        (open ? '<div class="table-wrap rreport"><table class="tbl"><thead><tr><th>' + t("Player", "Jugador") + "</th><th>" + t("Score", "Puntos") + "</th><th>" + t("Kills", "Bajas") +
+          "</th><th>" + t("Deaths", "Muertes") + "</th><th>" + t("Assists", "Asist.") + "</th><th>" + t("Medals", "Medallas") + "</th><th>" + t("Experience", "Experiencia") +
+          "</th></tr></thead><tbody>" + rows + "</tbody></table></div>" : "") + "</article>";
     }).join("");
-    $("recent").querySelectorAll("td[data-player]").forEach((td) => td.addEventListener("click", () => card(td.dataset.player)));
+    $("recent").querySelectorAll("[data-player]").forEach((el) => el.addEventListener("click", (e) => { e.stopPropagation(); card(el.dataset.player); }));
+    $("recent").querySelectorAll(".rtoggle").forEach((b) => b.addEventListener("click", () => {
+      const k = b.closest(".rcard").dataset.key;
+      recentOpen = recentOpen === k ? "" : k;
+      recent(data);
+    }));
+    // the pager: first, previous, up to 5 pages around this one, next, last
+    if (pages < 2) { $("recent-pager").innerHTML = ""; return; }
+    const btn = (p, label, on, off) => '<button type="button" data-page="' + p + '"' + (on ? ' class="on"' : "") + (off ? " disabled" : "") + ">" + label + "</button>";
+    let html = btn(0, "«", false, recentPage === 0) + btn(recentPage - 1, "‹", false, recentPage === 0);
+    const from = Math.max(0, Math.min(recentPage - 2, pages - 5)), to = Math.min(pages, from + 5);
+    for (let p = from; p < to; ++p) html += btn(p, String(p + 1), p === recentPage, false);
+    html += btn(recentPage + 1, "›", false, recentPage === pages - 1) + btn(pages - 1, "»", false, recentPage === pages - 1);
+    html += '<span class="pinfo">' + t("Page " + (recentPage + 1) + " of " + pages, "Página " + (recentPage + 1) + " de " + pages) + "</span>";
+    $("recent-pager").innerHTML = html;
+    $("recent-pager").querySelectorAll("button[data-page]").forEach((b) => b.addEventListener("click", () => {
+      recentPage = Number(b.dataset.page);
+      recentOpen = "";
+      recent(data);
+      $("recent").scrollIntoView({ behavior: "smooth", block: "start" });
+    }));
   }
 
   function updated(d) {
