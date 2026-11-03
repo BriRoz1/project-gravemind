@@ -41,7 +41,9 @@
 
   const $ = (id) => document.getElementById(id);
   const t = (en, es) => '<span lang="en">' + en + '</span><span lang="es">' + es + "</span>";
-  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  // a gamertag shown: isolated from the text around it (a name may carry right-to-left or isolate marks)
+  const nm = (s) => "<bdi>" + esc(s) + "</bdi>";
   const n = (v) => (v || 0).toLocaleString();
   const pct = (a, b) => (b ? Math.round((a * 100) / b) + " %" : "–");
   const kd = (k, d) => (k || d ? (k / Math.max(1, d)).toFixed(2) : "–");
@@ -169,13 +171,17 @@
     return m < 60 ? m + " min" : Math.floor(m / 60) + " h " + (m % 60) + " min";
   }
 
-  let data = null, playlists = {}, players = [], byName = {}, shown = PAGE, sortKey = "level", sortDown = true, filter = "", topTab = "";
+  let data = null, playlists = {}, players = [], byName = {}, shown = PAGE, sortKey = "level", sortDown = true, filter = "", topTab = "", topSort = "level";
+  const KD_GAMES = 5;  // games needed in a leaderboard sorted by K/D
 
   // every account with its totals over the playlists (ranks only where played)
   function prepare(d) {
     playlists = {};
+    ["playlists", "players", "matches", "recent"].forEach((k) => { if (!Array.isArray(d[k])) d[k] = []; });
+    d.recent.forEach((m) => { if (!Array.isArray(m.rows)) m.rows = []; });
+    d.matches.forEach((m) => { if (!Array.isArray(m.players)) m.players = []; });
     d.playlists.forEach((p) => { playlists[p.id] = p; });
-    players = d.players.map((p) => {
+    players = d.players.filter((p) => p && typeof p.name === "string").map((p) => {
       const tot = { games: 0, wins: 0, kills: 0, deaths: 0, assists: 0, medals: 0 };
       Object.values(p.ranks || {}).forEach((r) => { Object.keys(tot).forEach((k) => { tot[k] += r[k] || 0; }); });
       return Object.assign({ tot: tot, online: !!p.status }, p);
@@ -184,10 +190,66 @@
     players.forEach((p) => { byName[p.name] = p; });
   }
 
+  // the live counters at the top: online now (a pulsing dot while anyone is), matches being played, searching, accounts
   function tiles(d) {
-    const tile = (v, en, es) => '<div class="panel"><div class="stat">' + v + "<small>" + t(en, es) + "</small></div></div>";
-    $("tiles").innerHTML = tile(n(d.online), "online now", "en línea") + tile(n(d.playing), "in a match", "en partida") +
-      tile(n(d.searching), "searching", "buscando partida") + tile(n(d.accounts), "accounts", "cuentas");
+    const live = (d.matches || []).filter((m) => m.state === "playing").length;
+    const tile = (v, en, es, cls) => '<div class="figure' + (cls ? " " + cls : "") + '"><b>' + v + "</b><span>" + t(en, es) + "</span></div>";
+    $("tiles").innerHTML = tile(n(d.online), "online now", "en línea ahora", d.online ? "on" : "") +
+      tile(n(live), live === 1 ? "match in progress" : "matches in progress", live === 1 ? "partida en curso" : "partidas en curso") +
+      tile(n(d.searching), "searching for a match", "buscando partida") + tile(n(d.accounts), "registered players", "jugadores registrados");
+  }
+
+  // the newest accounts (stats.json's "newest", else the players that carry "joined"): a welcome card each, with the
+  // emblem, the armour colours, the rank icon and when they joined
+  function newest(d) {
+    let list = (d.newest || []).filter((x) => x && x.name && x.joined);
+    if (!list.length) list = players.filter((p) => p.joined).sort((a, b) => b.joined - a.joined).slice(0, 12);
+    $("newcomers").hidden = !list.length;
+    if (!list.length) return;
+    $("newest").innerHTML = list.slice(0, 12).map((x) => {
+      const p = byName[x.name] || { name: x.name };
+      const look = p.look, prim = color(look ? look[6] : 1), sec = color(look ? look[7] : 1);
+      const e = emblem(look, 56);
+      return '<button type="button" class="newcomer" data-player="' + esc(x.name) + '" style="--prim:' + prim + ";--sec:" + sec + '">' +
+        (e ? '<img class="emb nc-emb" src="' + e + '" width="56" height="56" alt="">' : '<span class="emb nc-emb"></span>') +
+        '<span class="nc-text"><span class="nc-name">' + nm(x.name) + (p.tag ? ' <span class="stag">' + esc(p.tag) + "</span>" : "") + "</span>" +
+        '<span class="nc-when">' + t("Joined ", "Llegó ") + ago(x.joined) + "</span></span>" +
+        '<span class="nc-rank">' + lvl(p.level || 1) + "<small>" + t("Level ", "Nivel ") + (p.level || 1) + "</small></span></button>";
+    }).join("");
+    $("newest").querySelectorAll("[data-player]").forEach((b) => b.addEventListener("click", () => card(b.dataset.player)));
+  }
+
+  // the best of the last 7 / 30 days: stats.json's "week" / "month" (Live keeps every account's days), or, from an
+  // older Live, the same counted from the recent matches it lists
+  function period(d, key, days) {
+    if (d[key] && Array.isArray(d[key].top)) return d[key].top;
+    const since = now() - days * 86400, sum = {};
+    (d.recent || []).filter((m) => m.ended >= since).forEach((m) => {
+      const res = result(m);
+      m.rows.forEach((r) => {
+        const s = sum[r.name] || (sum[r.name] = { name: r.name, games: 0, wins: 0, kills: 0, deaths: 0, exp: 0 });
+        const won = !res.tie && (m.teams ? res.winner === r.team : res.winner === r.name);
+        s.games++;
+        s.wins += won ? 1 : 0;
+        s.exp += won ? 2 : 1;
+        s.kills += r.kills || 0;
+        s.deaths += r.deaths || 0;
+      });
+    });
+    return Object.values(sum).sort((a, b) => b.wins - a.wins || b.exp - a.exp || b.kills - a.kills);
+  }
+  function leaders(d) {
+    [["week", 7], ["month", 30]].forEach(([key, days]) => {
+      const list = period(d, key, days).slice(0, 10);
+      $(key).innerHTML = list.length ? list.map((r, i) => {
+        const p = byName[r.name] || {};
+        return '<li class="' + (i < 3 ? "p" + (i + 1) : "") + '" data-player="' + esc(r.name) + '"><span class="pos">' + (i + 1) + "</span>" + emb(p, 32) +
+          '<span class="who">' + nm(r.name) + '<small>' + lvl(p.level || 1) + t(n(r.games) + (r.games === 1 ? " game" : " games") + " · K/D " + kd(r.kills, r.deaths),
+            n(r.games) + (r.games === 1 ? " partida" : " partidas") + " · K/D " + kd(r.kills, r.deaths)) + "</small></span>" +
+          '<span class="wins"><b>' + n(r.wins) + "</b>" + t(r.wins === 1 ? "win" : "wins", r.wins === 1 ? "victoria" : "victorias") + "</span></li>";
+      }).join("") : '<li class="empty">' + t("No matchmaking match in this time yet.", "Todavía ninguna partida de matchmaking en este tiempo.") + "</li>";
+      $(key).querySelectorAll("li[data-player]").forEach((li) => li.addEventListener("click", () => card(li.dataset.player)));
+    });
   }
 
   function matches(d) {
@@ -199,7 +261,7 @@
     $("matches").innerHTML = list.map((m) => {
       const pl = playlists[m.playlist] || {};
       const teams = pl.teams && m.players.some((p) => p.team >= 0);
-      const player = (p) => '<li data-player="' + esc(p.name) + '">' + lvl(p.level) + emb(byName[p.name] || {}) + esc(p.name) + "</li>";
+      const player = (p) => '<li data-player="' + esc(p.name) + '">' + lvl(p.level) + emb(byName[p.name] || {}) + nm(p.name) + "</li>";
       let body;
       if (teams) {
         const side = (team, en, es) => '<div class="team ' + (team ? "blue" : "red") + '"><b>' + t(en, es) + "</b><ul>" +
@@ -232,22 +294,30 @@
     $("top-tabs").innerHTML = tabs.map((x) => '<button type="button" data-tab="' + esc(x[0]) + '"' + (x[0] === topTab ? ' class="on"' : "") + ">" +
       t(esc(x[1]), esc(x[2])) + "</button>").join("");
     $("top-tabs").querySelectorAll("button").forEach((b) => b.addEventListener("click", () => { topTab = b.dataset.tab; top(d); }));
+    // the order: level (then experience), wins, or K/D (only with KD_GAMES games or more there)
+    const sorts = [["level", "By level", "Por nivel"], ["wins", "By wins", "Por victorias"], ["kd", "By K/D", "Por K/D"]];
+    $("top-sort").innerHTML = sorts.map((x) => '<button type="button" data-sort="' + x[0] + '"' + (x[0] === topSort ? ' class="on"' : "") + ">" + t(x[1], x[2]) + "</button>").join("");
+    $("top-sort").querySelectorAll("button").forEach((b) => b.addEventListener("click", () => { topSort = b.dataset.sort; top(d); }));
     let rows;
     if (!topTab) {
-      rows = players.filter((p) => p.tot.games).sort((a, b) => b.level - a.level || b.experience - a.experience || b.tot.wins - a.tot.wins)
-        .map((p) => Object.assign({ name: p.name, level: p.level, xp: p.experience }, p.tot));
+      rows = players.filter((p) => p.tot.games).map((p) => Object.assign({ name: p.name, level: p.level, xp: p.experience }, p.tot));
     } else {
-      rows = players.filter((p) => p.ranks && p.ranks[topTab] && p.ranks[topTab].games)
-        .map((p) => Object.assign({ name: p.name }, p.ranks[topTab]))
-        .sort((a, b) => b.level - a.level || b.xp - a.xp || b.wins - a.wins);
+      rows = players.filter((p) => p.ranks && p.ranks[topTab] && p.ranks[topTab].games).map((p) => Object.assign({ name: p.name }, p.ranks[topTab]));
     }
-    const body = rows.slice(0, TOP).map((r, i) => '<tr data-player="' + esc(r.name) + '"><td class="rank">' + (i + 1) + "</td><td>" + emb(byName[r.name] || {}) + esc(r.name) + "</td><td>" +
+    const ratio = (r) => r.kills / Math.max(1, r.deaths);
+    if (topSort === "kd") rows = rows.filter((r) => r.games >= KD_GAMES && (r.kills || r.deaths));
+    rows.sort(topSort === "wins" ? (a, b) => b.wins - a.wins || b.games - a.games || b.level - a.level
+      : topSort === "kd" ? (a, b) => ratio(b) - ratio(a) || b.kills - a.kills
+        : (a, b) => b.level - a.level || b.xp - a.xp || b.wins - a.wins);
+    const body = rows.slice(0, TOP).map((r, i) => '<tr data-player="' + esc(r.name) + '"' + (i < 3 ? ' class="p' + (i + 1) + '"' : "") + '><td class="rank">' + (i + 1) + "</td><td>" + emb(byName[r.name] || {}) + nm(r.name) + "</td><td>" +
       lvl(r.level) + "</td><td>" + n(r.games) + "</td><td>" + n(r.wins) + "</td><td>" + pct(r.wins, r.games) + "</td><td>" + n(r.kills) +
       "</td><td>" + n(r.deaths) + "</td><td>" + kd(r.kills, r.deaths) + "</td><td>" + n(r.medals) + "</td></tr>").join("");
     $("top").innerHTML = "<thead><tr><th>#</th><th>" + t("Player", "Jugador") + "</th><th>" + t("Level", "Nivel") + "</th><th>" + t("Games", "Partidas") +
       "</th><th>" + t("Wins", "Victorias") + "</th><th>" + t("Win %", "% vict.") + "</th><th>" + t("Kills", "Bajas") + "</th><th>" +
       t("Deaths", "Muertes") + "</th><th>K/D</th><th>" + t("Medals", "Medallas") + "</th></tr></thead><tbody>" +
-      (body || '<tr><td colspan="10" class="empty">' + t("Nobody has played this playlist yet.", "Nadie ha jugado esta lista todavía.") + "</td></tr>") + "</tbody>";
+      (body || '<tr><td colspan="10" class="empty">' + (topSort === "kd"
+        ? t("Nobody has " + KD_GAMES + " games with numbers here yet.", "Nadie tiene todavía " + KD_GAMES + " partidas con estadísticas aquí.")
+        : t("Nobody has played this playlist yet.", "Nadie ha jugado esta lista todavía.")) + "</td></tr>") + "</tbody>";
     $("top").querySelectorAll("tr[data-player]").forEach((tr) => tr.addEventListener("click", () => card(tr.dataset.player)));
   }
 
@@ -274,7 +344,7 @@
     const head = cols.map((c) => '<th data-sort="' + c[0] + '"' + (c[0] === sortKey ? ' class="' + (sortDown ? "down" : "up") + '"' : "") + ">" + t(c[1], c[2]) + "</th>").join("");
     const seen = (p) => p.online ? '<span class="online">' + { game: t("In a match", "En partida"), search: t("Searching", "Buscando"),
       lobby: t("In a lobby", "En una sala"), menu: t("Online", "En línea") }[p.status] + "</span>" : p.seen ? ago(p.seen) : "–";
-    const body = list.slice(0, shown).map((p) => '<tr data-player="' + esc(p.name) + '"><td>' + emb(p) + esc(p.name) + "</td><td>" + lvl(p.level) + "</td><td>" +
+    const body = list.slice(0, shown).map((p) => '<tr data-player="' + esc(p.name) + '"><td>' + emb(p) + nm(p.name) + "</td><td>" + lvl(p.level) + "</td><td>" +
       n(p.tot.games) + "</td><td>" + n(p.tot.wins) + "</td><td>" + pct(p.tot.wins, p.tot.games) + "</td><td>" + n(p.tot.kills) + "</td><td>" +
       n(p.tot.deaths) + "</td><td>" + kd(p.tot.kills, p.tot.deaths) + "</td><td>" + n(p.tot.medals) + "</td><td>" + seen(p) + "</td></tr>").join("");
     $("players").innerHTML = "<thead><tr>" + head + "</tr></thead><tbody>" + body + "</tbody>";
@@ -313,7 +383,7 @@
     // player's colours (figure)
     const tag = p.tag ? ' <span class="stag">[' + esc(p.tag) + "]</span>" : "";
     $("card-body").innerHTML = '<div class="card-head"><div class="card-id">' + (emblem(p.look, 128) ? '<img class="emb big" src="' + emblem(p.look, 128) + '" width="128" height="128" alt="">' : '<span class="emb big"></span>') +
-      "<div><h3>" + esc(p.name) + tag + "</h3>" +
+      "<div><h3>" + nm(p.name) + tag + "</h3>" +
       '<p class="sub">' + (p.online ? '<span class="online">' + t("Online", "En línea") + "</span>" : p.seen ? t("Last seen ", "Última vez ") + ago(p.seen) : "") +
       "<br>" + t(n(p.tot.games) + " games, " + n(p.tot.wins) + " wins", n(p.tot.games) + " partidas, " + n(p.tot.wins) + " victorias") +
       "<br>" + n(p.tot.kills) + " " + t("kills", "bajas") + ", " + n(p.tot.deaths) + " " + t("deaths", "muertes") + "<br>" + n(p.experience) + " " + t("experience", "experiencia") + "</p></div>" +
@@ -370,10 +440,10 @@
         outcome = '<span class="red' + (res.winner === 0 ? " won" : "") + '">' + t("Red", "Rojo") + " " + n(res.score[0] || 0) + "</span> – " +
           '<span class="blue' + (res.winner === 1 ? " won" : "") + '">' + t("Blue", "Azul") + " " + n(res.score[1] || 0) + "</span>";
       } else {
-        outcome = res.tie ? t("Tie", "Empate") : '<span class="won">' + esc(res.winner) + "</span>";
+        outcome = res.tie ? t("Tie", "Empate") : '<span class="won">' + nm(res.winner) + "</span>";
       }
       const rows = m.rows.slice().sort((a, b) => (m.teams && a.team !== b.team ? a.team - b.team : b.score - a.score)).map((r) =>
-        '<tr class="' + (m.teams ? (r.team ? "t-blue" : "t-red") : "") + (r.left ? " left" : "") + '"><td data-player="' + esc(r.name) + '">' + lvl(r.level) + emb(byName[r.name] || {}) + esc(r.name) +
+        '<tr class="' + (m.teams ? (r.team ? "t-blue" : "t-red") : "") + (r.left ? " left" : "") + '"><td data-player="' + esc(r.name) + '">' + lvl(r.level) + emb(byName[r.name] || {}) + nm(r.name) +
         (r.left ? ' <small>' + t("left", "se fue") + "</small>" : "") + "</td><td>" + n(r.score) + "</td><td>" + (m.stats ? n(r.kills) : "–") + "</td><td>" +
         (m.stats ? n(r.deaths) : "–") + "</td><td>" + (m.stats ? n(r.assists) : "–") + "</td><td>" + (m.stats ? n(r.medals) : "–") + "</td><td>" +
         (r.xp ? (r.xp > 0 ? "+" : "") + r.xp : "–") + "</td></tr>").join("");
@@ -398,13 +468,9 @@
     const first = !data;
     data = d;
     prepare(d);
-    updated(d);
-    tiles(d);
-    matches(d);
-    playlistTable(d);
-    top(d);
-    playerTable();
-    recent(d);
+    // each part on its own: one that fails (an odd entry in the file) leaves the others drawn
+    [() => updated(d), () => tiles(d), () => newest(d), () => leaders(d), () => matches(d), () => playlistTable(d), () => top(d),
+      () => playerTable(), () => recent(d)].forEach((part) => { try { part(); } catch (e) { console.error(e); } });
     // stats.html#p=<gamertag> opens that player's card (a link to share)
     if (first && location.hash.startsWith("#p=")) card(decodeURIComponent(location.hash.slice(3)));
   }
@@ -414,7 +480,12 @@
       try {
         const r = await fetch(url, { cache: "no-cache" });
         if (!r.ok) continue;
-        render(await r.json());
+        // read as bytes and decoded leniently: a stray non-UTF-8 byte (an older Live's file) becomes U+FFFD, not a
+        // file that cannot be read
+        const text = new TextDecoder("utf-8").decode(await r.arrayBuffer());
+        const d = JSON.parse(text);
+        if (!d || typeof d !== "object") continue;
+        render(d);
         return;
       } catch (e) { /* the next one */ }
     }

@@ -492,7 +492,7 @@ footer::before { content: ""; position: absolute; top: -1px; left: 0; width: min
 }
 
 /* rank icons, emblems and the player modal (stats.js) */
-img.rank { vertical-align: middle; margin-right: 6px; width: 26px; height: 26px; }
+img.rank { display: inline-block; vertical-align: middle; margin-right: 6px; width: 26px; height: 26px; }
 img.rank.big { width: 152px; height: 152px; margin: 0; filter: drop-shadow(0 0 14px rgba(110, 160, 255, 0.5)); }
 .emb { display: inline-block; vertical-align: middle; margin-right: 8px; width: 24px; height: 24px; background: rgba(0, 0, 0, 0.35); border: 1px solid var(--line-soft); }
 .emb.big { width: 128px; height: 128px; margin: 0; padding: 6px; background: rgba(0, 0, 0, 0.45); border: 1px solid var(--line);
@@ -515,4 +515,62 @@ body.modal-open { overflow: hidden; }
   .card-rank { grid-column: 1 / -1; }
   .card-figure { grid-row: auto; grid-column: 1; justify-self: center; }
   .modal { padding: 16px 8px; }
+}
+
+/* stats page, 2026-11-03: the live counters, the new players' welcome, the best of the week / month, podium colours */
+.live-figures { margin-top: 22px; }
+.live-figures .figure.on b::after { content: ""; display: inline-block; width: 10px; height: 10px; margin-left: 12px; vertical-align: middle;
+  border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); animation: pulse 2.2s ease-in-out infinite; }
+.live-figures .figure.on span { color: #c9f5d2; }
+bdi { unicode-bidi: isolate; }
+.newcomers { margin-top: 10px; padding: 30px 30px 28px;
+  background: radial-gradient(ellipse 70% 120% at 0% 0%, rgba(60, 120, 240, 0.28), transparent 60%), linear-gradient(180deg, rgba(14, 34, 78, 0.85), rgba(7, 18, 44, 0.85));
+  border-color: rgba(134, 184, 255, 0.4); }
+.newcomers .h { margin-bottom: 22px; }
+.newcomer-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); }
+.newcomer { position: relative; display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; width: 100%; text-align: left;
+  padding: 12px 14px 12px 18px; font: inherit; color: var(--text); cursor: pointer; background: rgba(4, 12, 30, 0.6); border: 1px solid var(--line-soft);
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  transition: transform 0.3s var(--ease), background 0.3s, border-color 0.3s; animation: fade 0.6s var(--ease) both; }
+.newcomer::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: linear-gradient(180deg, var(--prim), var(--sec));
+  box-shadow: 0 0 14px var(--prim); }
+.newcomer:hover, .newcomer:focus-visible { transform: translateY(-3px); background: rgba(20, 44, 96, 0.75); border-color: rgba(134, 184, 255, 0.5); }
+.newcomer .nc-emb { width: 56px; height: 56px; margin: 0; padding: 3px; background: rgba(0, 0, 0, 0.45); border: 1px solid var(--prim); }
+.nc-text { min-width: 0; display: grid; }
+.nc-name { color: var(--white); font-weight: 600; font-size: 19px; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nc-name .stag { color: var(--accent); font-weight: 500; font-size: 14px; letter-spacing: 0.06em; margin-left: 4px; }
+.nc-when { color: var(--muted); font-size: 15px; }
+.nc-rank { display: grid; justify-items: center; }
+.nc-rank img.rank { width: 34px; height: 34px; margin: 0; filter: drop-shadow(0 0 6px rgba(110, 160, 255, 0.5)); }
+.nc-rank small { font-family: var(--head); font-size: 9px; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; margin-top: 2px; white-space: nowrap; }
+.leader-board h3 { margin: 0 0 2px; }
+.leader-board .sub { color: var(--muted); font-size: 15px; margin: 0 0 14px; text-transform: uppercase; letter-spacing: 0.04em; }
+.podium { list-style: none; margin: 0; padding: 0; }
+.podium li { display: grid; grid-template-columns: 30px auto 1fr auto; gap: 12px; align-items: center; padding: 8px 12px; margin-top: 4px;
+  background: rgba(14, 34, 74, 0.55); cursor: pointer; transition: background 0.2s; }
+.podium li:hover { background: rgba(40, 80, 150, 0.6); }
+.podium li.empty { display: block; cursor: default; background: none; padding: 6px 0; }
+.podium .pos { font-family: var(--head); font-size: 14px; color: var(--accent); text-align: center; }
+.podium .emb { width: 32px; height: 32px; margin: 0; }
+.podium .who { min-width: 0; color: var(--white); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 1.25; }
+.podium .who small { display: block; color: var(--muted); font-weight: 400; font-size: 14px; }
+.podium .who small img.rank { width: 18px; height: 18px; margin-right: 5px; vertical-align: -4px; display: inline-block; }
+.podium .wins { text-align: right; color: var(--muted); font-size: 13px; text-transform: uppercase; line-height: 1.1; }
+.podium .wins b { display: block; font-family: var(--head); font-weight: 400; font-size: 20px; color: var(--white); }
+.podium li.p1 { background: linear-gradient(90deg, rgba(242, 201, 76, 0.22), rgba(14, 34, 74, 0.55) 60%); border-left: 3px solid #f2c94c; }
+.podium li.p2 { background: linear-gradient(90deg, rgba(201, 214, 234, 0.18), rgba(14, 34, 74, 0.55) 60%); border-left: 3px solid #c9d6ea; }
+.podium li.p3 { background: linear-gradient(90deg, rgba(216, 146, 90, 0.2), rgba(14, 34, 74, 0.55) 60%); border-left: 3px solid #d8925a; }
+.podium li.p1 .pos, .tbl tr.p1 td.rank { color: #f2c94c; }
+.podium li.p2 .pos, .tbl tr.p2 td.rank { color: #dfe7f5; }
+.podium li.p3 .pos, .tbl tr.p3 td.rank { color: #e6a06a; }
+.tabs.sort { margin-top: -4px; }
+.tabs.sort button { font-size: 10px; padding: 6px 12px; background: transparent; }
+.tabs.sort button.on { background: rgba(29, 82, 173, 0.45); }
+@media (max-width: 560px) {
+  .newcomers { padding: 22px 16px 18px; }
+  .newcomer { gap: 10px; padding: 10px 10px 10px 14px; }
+  .newcomer .nc-emb { width: 46px; height: 46px; }
+  .newcomer:nth-child(n+7) { display: none; }  /* six on a phone */
+  .podium li { grid-template-columns: 22px auto 1fr auto; gap: 8px; padding: 8px; }
+  .live-figures .figure { padding: 18px 16px; }
 }

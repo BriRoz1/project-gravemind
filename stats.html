@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Stats · Project Gravemind</title>
-<meta name="description" content="Live statistics from GRAVEMIND LIVE: players online, matches in progress, levels, kills and medals.">
+<meta name="description" content="Live statistics from GRAVEMIND LIVE: players online, matches in progress, new players, the best of the week and the month, leaderboards, levels, kills and medals.">
 <meta name="theme-color" content="#030814">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Project Gravemind">
 <meta property="og:title" content="Stats · Project Gravemind">
-<meta property="og:description" content="Live statistics from GRAVEMIND LIVE: players online, matches in progress, levels, kills and medals.">
+<meta property="og:description" content="Live statistics from GRAVEMIND LIVE: players online, matches in progress, new players, the best of the week and the month, leaderboards, levels, kills and medals.">
 <meta property="og:image" content="https://projectgravemind.com/img/ingame.jpg">
 <meta property="og:url" content="https://projectgravemind.com/stats.html">
 <meta name="twitter:card" content="summary_large_image">
@@ -47,18 +47,29 @@
 <main id="main">
 
 <section class="page-hero"><div class="wrap">
-  <div class="section-head"><p class="eyebrow"><span lang="en">GRAVEMIND LIVE</span><span lang="es">GRAVEMIND LIVE</span></p><h1 class="h"><span lang="en">Stats</span><span lang="es">Estadísticas</span></h1><p class="lead"><span lang="en">Who's online, the matches being played right now, and every player's level, kills, deaths and medals from matchmaking.</span><span lang="es">Quién está en línea, las partidas que se juegan ahora mismo y el nivel, las bajas, las muertes y las medallas de cada jugador en matchmaking.</span></p></div>
+  <div class="section-head"><p class="eyebrow"><span lang="en">GRAVEMIND LIVE</span><span lang="es">GRAVEMIND LIVE</span></p><h1 class="h"><span lang="en">Stats</span><span lang="es">Estadísticas</span></h1><p class="lead"><span lang="en">Who's online, the matches being played right now, the newest players, the best of the week and every player's level, kills and medals from matchmaking.</span><span lang="es">Quién está en línea, las partidas que se juegan ahora mismo, los jugadores recién llegados, los mejores de la semana y el nivel, las bajas y las medallas de cada jugador en matchmaking.</span></p></div>
   <p class="updated" id="updated"><span lang="en">Loading...</span><span lang="es">Cargando...</span></p>
+  <div class="figures live-figures" id="tiles"></div>
 </div></section>
 <section class="reveal stats"><div class="wrap">
-  <div class="grid four tiles" id="tiles"></div>
+  <div class="panel newcomers" id="newcomers" hidden>
+    <p class="eyebrow"><span lang="en">Welcome to the community</span><span lang="es">Bienvenidos a la comunidad</span></p>
+    <h2 class="h"><span lang="en">New players</span><span lang="es">Nuevos jugadores</span></h2>
+    <div class="newcomer-grid" id="newest"></div>
+  </div>
+  <div class="label"><span lang="en">Best players</span><span lang="es">Mejores jugadores</span></div>
+  <div class="grid two leaders">
+    <div class="panel leader-board"><h3><span lang="en">Best of the week</span><span lang="es">Mejores de la semana</span></h3><p class="sub"><span lang="en">Last 7 days · most wins</span><span lang="es">Últimos 7 días · más victorias</span></p><ol class="podium" id="week"></ol></div>
+    <div class="panel leader-board"><h3><span lang="en">Best of the month</span><span lang="es">Mejores del mes</span></h3><p class="sub"><span lang="en">Last 30 days · most wins</span><span lang="es">Últimos 30 días · más victorias</span></p><ol class="podium" id="month"></ol></div>
+  </div>
   <div class="label"><span lang="en">Matches in progress</span><span lang="es">Partidas en curso</span></div>
   <div class="grid three" id="matches"></div>
+  <div class="label"><span lang="en">Leaderboards</span><span lang="es">Clasificaciones</span></div>
+  <div class="tabs" id="top-tabs"></div>
+  <div class="tabs sort" id="top-sort"></div>
+  <div class="table-wrap"><table class="tbl" id="top"></table></div>
   <div class="label"><span lang="en">Playlists</span><span lang="es">Listas</span></div>
   <div class="table-wrap"><table class="tbl" id="playlists"></table></div>
-  <div class="label"><span lang="en">Top players</span><span lang="es">Mejores jugadores</span></div>
-  <div class="tabs" id="top-tabs"></div>
-  <div class="table-wrap"><table class="tbl" id="top"></table></div>
   <div class="label"><span lang="en">Players</span><span lang="es">Jugadores</span></div>
   <div class="filter"><input type="search" id="find" placeholder="Gamertag" autocomplete="off" aria-label="Gamertag"><span id="found"></span></div>
   <div class="table-wrap"><table class="tbl" id="players"></table></div>
@@ -66,7 +77,7 @@
   <div class="modal" id="card" hidden><div class="panel player-card"><button type="button" class="close" id="card-close" aria-label="Close">&times;</button><div id="card-body"></div></div></div>
   <div class="label"><span lang="en">Recent matches</span><span lang="es">Últimas partidas</span></div>
   <div id="recent"></div>
-  <p class="note info small"><span lang="en">Only matchmaking matches count, not custom games or dedicated servers. Levels follow Halo 2's rules: wins and losses only. The page refreshes itself every two minutes, and the data is a few minutes behind.</span><span lang="es">Solo cuentan las partidas de matchmaking, no las personalizadas ni las de servidores dedicados. Los niveles siguen las reglas de Halo 2: solo victorias y derrotas. La página se actualiza sola cada dos minutos y los datos llevan unos minutos de retraso.</span></p>
+  <p class="note info small"><span lang="en">Only matchmaking matches count, not custom games or dedicated servers. Levels follow Halo 2's rules: wins and losses only. The best of the week and of the month add up every playlist. The page refreshes itself every two minutes, and the data is a few minutes behind.</span><span lang="es">Solo cuentan las partidas de matchmaking, no las personalizadas ni las de servidores dedicados. Los niveles siguen las reglas de Halo 2: solo victorias y derrotas. Los mejores de la semana y del mes suman todas las listas. La página se actualiza sola cada dos minutos y los datos llevan unos minutos de retraso.</span></p>
 </div></section>
 
 </main>
