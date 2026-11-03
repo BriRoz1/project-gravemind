@@ -606,3 +606,21 @@ bdi { unicode-bidi: isolate; }
   .podium li { grid-template-columns: 22px auto 1fr auto; gap: 8px; padding: 8px; }
   .live-figures .figure { padding: 18px 16px; }
 }
+
+/* the developer's badge (stats.js DEVS): neon, with a slow glow and a light sweeping across */
+.devtag { position: relative; display: inline-block; overflow: hidden; margin-left: 8px; padding: 1px 7px 0; vertical-align: middle;
+  font-family: var(--head); font-size: 10px; line-height: 16px; letter-spacing: 0.18em; color: #eaffff; border: 1px solid #3ff3ff;
+  border-radius: 3px; background: rgba(0, 210, 255, 0.12);
+  text-shadow: 0 0 4px #3ff3ff, 0 0 10px #00c8ff, 0 0 18px #00a0ff;
+  box-shadow: 0 0 6px #00c8ff, inset 0 0 6px rgba(0, 200, 255, 0.5);
+  animation: devglow 2.4s ease-in-out infinite; }
+.devtag::after { content: ""; position: absolute; top: 0; left: -60%; width: 40%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent); transform: skewX(-20deg);
+  animation: devsweep 3.2s ease-in-out infinite; }
+@keyframes devglow {
+  0%, 100% { box-shadow: 0 0 5px #00c8ff, inset 0 0 5px rgba(0, 200, 255, 0.45); border-color: #3ff3ff; }
+  50% { box-shadow: 0 0 14px #00e5ff, 0 0 26px rgba(160, 80, 255, 0.55), inset 0 0 8px rgba(0, 220, 255, 0.7); border-color: #b48cff; }
+}
+@keyframes devsweep { 0% { left: -60%; } 55%, 100% { left: 130%; } }
+@media (prefers-reduced-motion: reduce) { .devtag, .devtag::after { animation: none; } }
+.player-card h3 .devtag, .modal h3 .devtag { font-size: 14px; line-height: 22px; padding: 2px 12px 0; margin-left: 12px; }

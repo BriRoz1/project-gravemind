@@ -44,7 +44,9 @@
   const t = (en, es) => '<span lang="en">' + en + '</span><span lang="es">' + es + "</span>";
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   // a gamertag shown: isolated from the text around it (a name may carry right-to-left or isolate marks)
-  const nm = (s) => "<bdi>" + esc(s) + "</bdi>";
+  // the project's developer: a neon DEV badge beside his gamertag, wherever it is shown
+  const DEVS = ["BriRoz"];
+  const nm = (s) => "<bdi>" + esc(s) + "</bdi>" + (DEVS.includes(s) ? '<span class="devtag" title="Project Gravemind developer">DEV</span>' : "");
   const n = (v) => (v || 0).toLocaleString();
   const pct = (a, b) => (b ? Math.round((a * 100) / b) + " %" : "–");
   const kd = (k, d) => (k || d ? (k / Math.max(1, d)).toFixed(2) : "–");
