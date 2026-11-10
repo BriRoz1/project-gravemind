@@ -66,6 +66,22 @@
     document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
   }
 
+  // roadmap filter: ALL / DONE / IN DEVELOPMENT / PLANNED (sections with nothing left are hidden)
+  const filters = document.querySelectorAll(".rfilter [data-filter]");
+  filters.forEach((b) => b.addEventListener("click", () => {
+    const f = b.dataset.filter;
+    filters.forEach((x) => x.classList.toggle("on", x === b));
+    document.querySelectorAll(".rsec").forEach((sec) => {
+      let shown = 0;
+      sec.querySelectorAll(".ri").forEach((li) => {
+        const on = f === "all" || li.dataset.status === f;
+        li.classList.toggle("hide", !on);
+        if (on) shown++;
+      });
+      sec.classList.toggle("empty", shown === 0);
+    });
+  }));
+
   // sections slide in as they come into view
   const items = document.querySelectorAll(".reveal");
   if ("IntersectionObserver" in window) {

@@ -17,8 +17,9 @@
 <link rel="icon" href="img/logo.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600&family=Michroma&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Chakra+Petch:wght@500;600&family=Exo+2:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="stats.css">
 </head>
 <body class="stats">
 <a class="skip" href="#main"><span lang="en">Skip to content</span><span lang="es">Saltar al contenido</span></a>
@@ -31,8 +32,9 @@
       <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
       <a href="features.html"><span lang="en">Features</span><span lang="es">Funciones</span></a>
       <a href="live.html">GRAVEMIND LIVE</a>
+      <a href="roadmap.html"><span lang="en">Roadmap</span><span lang="es">Hoja de ruta</span></a>
+      <a href="devlog.html">Devlog</a>
       <a href="stats.html" class="on" aria-current="page"><span lang="en">Stats</span><span lang="es">Estadísticas</span></a>
-      <a href="servers.html"><span lang="en">Servers</span><span lang="es">Servidores</span></a>
       <a href="faq.html">FAQ</a>
     </nav>
     <div class="top-actions">
@@ -46,40 +48,77 @@
 </header>
 <main id="main">
 
-<section class="page-hero"><div class="wrap">
-  <div class="section-head"><p class="eyebrow"><span lang="en">GRAVEMIND LIVE</span><span lang="es">GRAVEMIND LIVE</span></p><h1 class="h"><span lang="en">Stats</span><span lang="es">Estadísticas</span></h1><p class="lead"><span lang="en">Who's online, the matches being played right now, the newest players, the best of the week and every player's level, kills and medals from matchmaking.</span><span lang="es">Quién está en línea, las partidas que se juegan ahora mismo, los jugadores recién llegados, los mejores de la semana y el nivel, las bajas y las medallas de cada jugador en matchmaking.</span></p></div>
-  <p class="updated" id="updated"><span lang="en">Loading...</span><span lang="es">Cargando...</span></p>
-  <div class="figures live-figures" id="tiles"></div>
-</div></section>
-<section class="reveal stats"><div class="wrap">
-  <div class="panel newcomers" id="newcomers" hidden>
-    <p class="eyebrow"><span lang="en">Welcome to the community</span><span lang="es">Bienvenidos a la comunidad</span></p>
-    <h2 class="h"><span lang="en">New players</span><span lang="es">Nuevos jugadores</span></h2>
-    <div class="newcomer-grid" id="newest"></div>
+<section class="page-hero sx-hero"><div class="wrap">
+  <div class="sx-hero-grid">
+    <div class="sx-hero-text">
+      <div class="section-head"><p class="eyebrow"><span lang="en">GRAVEMIND LIVE</span><span lang="es">GRAVEMIND LIVE</span></p><h1 class="h"><span lang="en">Stats</span><span lang="es">Estadísticas</span></h1><p class="lead"><span lang="en">Every matchmaking match, every level and every medal, straight from GRAVEMIND LIVE.</span><span lang="es">Cada partida de matchmaking, cada nivel y cada medalla, directo desde GRAVEMIND LIVE.</span></p></div>
+      <div class="sx-find" role="search">
+        <label class="sx-find-label" for="find"><span lang="en">Find a player</span><span lang="es">Buscar un jugador</span></label>
+        <div class="sx-find-box">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>
+          <input type="search" id="find" placeholder="Gamertag" autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="find-list">
+          <kbd aria-hidden="true">/</kbd>
+        </div>
+        <ul class="sx-find-list" id="find-list" role="listbox" hidden></ul>
+      </div>
+      <p class="sx-updated" id="updated"><span lang="en">Loading...</span><span lang="es">Cargando...</span></p>
+    </div>
+    <div class="sx-ringbox" id="ring" aria-live="polite"></div>
   </div>
-  <div class="label"><span lang="en">Best players</span><span lang="es">Mejores jugadores</span></div>
-  <div class="grid two leaders">
-    <div class="panel leader-board"><h3><span lang="en">Best of the week</span><span lang="es">Mejores de la semana</span></h3><p class="sub"><span lang="en">Last 7 days · most wins</span><span lang="es">Últimos 7 días · más victorias</span></p><ol class="podium" id="week"></ol></div>
-    <div class="panel leader-board"><h3><span lang="en">Best of the month</span><span lang="es">Mejores del mes</span></h3><p class="sub"><span lang="en">Last 30 days · most wins</span><span lang="es">Últimos 30 días · más victorias</span></p><ol class="podium" id="month"></ol></div>
-  </div>
-  <div class="label"><span lang="en">Matches in progress</span><span lang="es">Partidas en curso</span></div>
-  <div class="grid three" id="matches"></div>
-  <div class="label"><span lang="en">Leaderboards</span><span lang="es">Clasificaciones</span></div>
-  <div class="tabs" id="top-tabs"></div>
-  <div class="tabs sort" id="top-sort"></div>
-  <div class="table-wrap"><table class="tbl" id="top"></table></div>
-  <div class="label"><span lang="en">Playlists</span><span lang="es">Listas</span></div>
-  <div class="table-wrap"><table class="tbl" id="playlists"></table></div>
-  <div class="label"><span lang="en">Players</span><span lang="es">Jugadores</span></div>
-  <div class="filter"><input type="search" id="find" placeholder="Gamertag" autocomplete="off" aria-label="Gamertag"><span id="found"></span></div>
-  <div class="table-wrap"><table class="tbl" id="players"></table></div>
-  <div class="more"><button type="button" class="btn ghost" id="more"><span lang="en">More</span><span lang="es">Más</span></button></div>
-  <div class="modal" id="card" hidden><div class="panel player-card"><button type="button" class="close" id="card-close" aria-label="Close">&times;</button><div id="card-body"></div></div></div>
-  <div class="label"><span lang="en">Recent matches</span><span lang="es">Últimas partidas</span></div>
-  <div id="recent" class="rgrid"></div>
-  <div id="recent-pager" class="pager"></div>
-  <p class="note info small"><span lang="en">Only matchmaking matches count, not custom games or dedicated servers. Levels follow Halo 2's rules: wins and losses only. The best of the week and of the month add up every playlist. The page refreshes itself every two minutes, and the data is a few minutes behind.</span><span lang="es">Solo cuentan las partidas de matchmaking, no las personalizadas ni las de servidores dedicados. Los niveles siguen las reglas de Halo 2: solo victorias y derrotas. Los mejores de la semana y del mes suman todas las listas. La página se actualiza sola cada dos minutos y los datos llevan unos minutos de retraso.</span></p>
+  <div class="sx-live" id="tiles"></div>
 </div></section>
+
+<section class="sx-sec"><div class="wrap">
+  <div class="sx-head"><span class="sx-idx">01</span><h2><span lang="en">Live now</span><span lang="es">En directo</span></h2><p class="sx-cap" id="live-cap"></p></div>
+  <div class="sx-livegrid" id="live"></div>
+</div></section>
+
+<section class="sx-sec"><div class="wrap">
+  <div class="sx-head"><span class="sx-idx">02</span><h2><span lang="en">Recent matches</span><span lang="es">Últimas partidas</span></h2><p class="sx-cap" id="recent-cap"></p></div>
+  <div class="sx-chips" id="recent-filter" role="group" aria-label="Playlist"></div>
+  <div class="sx-matches" id="recent"></div>
+  <div class="sx-more"><button type="button" class="sx-btn" id="recent-more"><span lang="en">Show more</span><span lang="es">Ver más</span></button></div>
+</div></section>
+
+<section class="sx-sec"><div class="wrap">
+  <div class="sx-head"><span class="sx-idx">03</span><h2><span lang="en">Leaders</span><span lang="es">Líderes</span></h2><p class="sx-cap" id="lead-cap"></p></div>
+  <div class="sx-chips" id="lead-scope" role="group" aria-label="Period"></div>
+  <div class="sx-leaders" id="leaders"></div>
+</div></section>
+
+<section class="sx-sec"><div class="wrap">
+  <div class="sx-head"><span class="sx-idx">04</span><h2><span lang="en">Top players</span><span lang="es">Mejores jugadores</span></h2><p class="sx-cap" id="top-cap"></p></div>
+  <div class="sx-chips" id="top-tabs" role="group" aria-label="Playlist"></div>
+  <div id="top"></div>
+</div></section>
+
+<section class="sx-sec"><div class="wrap">
+  <div class="sx-head"><span class="sx-idx">05</span><h2><span lang="en">Activity</span><span lang="es">Actividad</span></h2><p class="sx-cap"><span lang="en">Matchmaking only</span><span lang="es">Solo matchmaking</span></p></div>
+  <div class="sx-charts">
+    <div class="sx-panel sx-chart">
+      <div class="sx-chart-head"><div><h3><span lang="en">Matches played</span><span lang="es">Partidas jugadas</span></h3><p class="sx-sub" id="act-sub"></p></div>
+        <div class="sx-seg" id="act-mode" role="group" aria-label="Activity"></div></div>
+      <div class="sx-kpis" id="act-kpis"></div>
+      <div class="sx-svg" id="activity"></div>
+    </div>
+    <div class="sx-panel sx-chart">
+      <div class="sx-chart-head"><div><h3><span lang="en">Playlists</span><span lang="es">Listas</span></h3><p class="sx-sub" id="pl-sub"></p></div>
+        <div class="sx-seg" id="pl-mode" role="group" aria-label="Playlists"></div></div>
+      <div class="sx-svg" id="playlists"></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="sx-sec" id="newcomers" hidden><div class="wrap">
+  <div class="sx-head"><span class="sx-idx">06</span><h2><span lang="en">New players</span><span lang="es">Nuevos jugadores</span></h2><p class="sx-cap"><span lang="en">Welcome to the community</span><span lang="es">Bienvenidos a la comunidad</span></p></div>
+  <div class="newcomer-grid" id="newest"></div>
+</div></section>
+
+<section class="sx-sec sx-last"><div class="wrap">
+  <p class="sx-note"><span lang="en">Only matchmaking matches count, not custom games or dedicated servers. Levels follow Halo 2's rules: wins and losses only. GRAVEMIND LIVE publishes these numbers every few minutes and this page loads them again every two minutes on its own.</span><span lang="es">Solo cuentan las partidas de matchmaking, no las personalizadas ni las de servidores dedicados. Los niveles siguen las reglas de Halo 2: solo victorias y derrotas. GRAVEMIND LIVE publica estos datos cada pocos minutos y esta página los vuelve a cargar sola cada dos minutos.</span></p>
+</div></section>
+
+<div class="sx-modal" id="card" hidden><div class="sx-dialog" role="dialog" aria-modal="true" aria-labelledby="card-name"><button type="button" class="sx-close" id="card-close" aria-label="Close / Cerrar">&times;</button><div id="card-body"></div></div></div>
 
 </main>
 <footer>
@@ -93,6 +132,8 @@
       <ul>
         <li><a href="features.html"><span lang="en">Features</span><span lang="es">Funciones</span></a></li>
         <li><a href="live.html">GRAVEMIND LIVE</a></li>
+        <li><a href="roadmap.html"><span lang="en">Roadmap</span><span lang="es">Hoja de ruta</span></a></li>
+        <li><a href="devlog.html">Devlog</a></li>
         <li><a href="stats.html"><span lang="en">Stats</span><span lang="es">Estadísticas</span></a></li>
         <li><a href="servers.html"><span lang="en">Servers</span><span lang="es">Servidores</span></a></li>
       </ul>
